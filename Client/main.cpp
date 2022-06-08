@@ -1,8 +1,7 @@
-﻿// Client.cpp : 애플리케이션에 대한 진입점을 정의합니다.
-//
-
+﻿#include "pch.h"
 #include "framework.h"
 #include "Client.h"
+#include "CCore.h"
 
 #define MAX_LOADSTRING 100
 
@@ -18,6 +17,12 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
+// 정적변수 (데이터 영역)
+// 1. 함수 안에
+// 2. 파일
+// 3. 클래스 안에
+
+
 // SAL 주석
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance, /*실행 된 프로세스의 시작 주소*/
                      _In_opt_ HINSTANCE hPrevInstance, 
@@ -29,6 +34,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, /*실행 된 프로세스의 시
 
     // TODO: 여기에 코드를 입력합니다.
 
+    
+
+    //CCore* pCore = CCore::GetInstance();
+
     // 전역 문자열을 초기화합니다.
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
     LoadStringW(hInstance, IDC_CLIENT, szWindowClass, MAX_LOADSTRING);
@@ -36,11 +45,26 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, /*실행 된 프로세스의 시
     // 윈도우 정보 등록
     MyRegisterClass(hInstance);
 
-    // 애플리케이션 초기화를 수행합니다 : 윈도우 생성
+    // 윈도우 생성
     if (!InitInstance (hInstance, nCmdShow))
     {
         return FALSE;
     }
+
+    // Core 초기화
+    if (FAILED(CCore::GetInst()->init(g_hWnd, POINT{ 1280, 768 })))
+    {
+        MessageBox(nullptr, L"Core 객체 초기화 실패", L"ERROR", MB_OK);
+        return FALSE;
+    }
+
+
+
+
+
+
+
+
 
     // 단축키 테이블 정보 로딩
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CLIENT));
@@ -52,12 +76,32 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, /*실행 된 프로세스의 시
     // GetMessage
     // 메세지큐에서 메세지가 확인 될 때까지 대기
     // msg.message == WM_QUIT 일 때 false를 반환 :: 프로그램 종료 
-    while (GetMessage(&msg, nullptr, 0, 0))
+
+    // PeekMessage
+    // 메세지 유무와 관계없이 반환
+    // 메세지큐에서 메세지를 확인한 경우 true, 메세지큐에 메세지가 없는 경우 false 를 반환한다.
+
+
+    while (true)
     {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
+            if (WM_QUIT == msg.message)
+                break;
+
+            if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+            {
+                TranslateMessage(&msg);
+                DispatchMessage(&msg);
+            }
+        }
+        // 메세지가 발생하지 않는 대부분의 시간
+        else
+        {
+            // Game 코드 수행
+            // 디자인 패턴(설계 유형)
+            // 싱글톤 패턴
+            CCore::GetInst()->progress();
         }
     }
 
@@ -107,7 +151,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-   HWND g_hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+   g_hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
    if (!g_hWnd)
@@ -132,24 +176,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 //
 
-#include <vector>
-
-using std::vector;
-
-struct tObjInfo
-{
-    POINT g_ptObjPos;
-    POINT g_ptObjScale;
-};
-
-vector<tObjInfo> g_vecInfo;
-
-// 좌상단
-POINT g_ptLT;
-
-// 우하단
-POINT g_ptRB;
-bool bLbtnDown = false;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -178,102 +204,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             // Device Context 만들어서 ID(HANDLE)을 반환
             HDC hdc = BeginPaint(hWnd, &ps); // Device Context (그리기)
-            // DC의 목적지는 hWnd
-            // DC의 펜은 기본펜(Black)
-            // DC의 브러쉬는 기본 브러쉬(White)
+           
+            //Rectangle(hdc, 0, 0, 1280, 768);
             
-            // 직접 펜과 브러쉬를 만들어서 DC에 지급
-            HPEN hRedPen = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
-            HBRUSH hBlueBrush = CreateSolidBrush(RGB(0, 0, 255));
-            // 기본 펜, 브러쉬의 ID 값을 받아 둠
-            HPEN hDefaultPen = (HPEN)SelectObject(hdc, hRedPen);
-            HBRUSH hDefaultBrush = (HBRUSH)SelectObject(hdc, hBlueBrush);
-
-            // 변경된 펜으로 사각형 그림
-            if (bLbtnDown)
-            {
-                Rectangle(hdc, g_ptLT.x, g_ptLT.y, g_ptRB.x, g_ptRB.y);
-            }
-            
-            // 추가된 사각형들도 그려준다
-            for (size_t i = 0; i < g_vecInfo.size(); ++i)
-            {
-                Rectangle(hdc, 
-                    g_vecInfo[i].g_ptObjPos.x - g_vecInfo[i].g_ptObjScale.x / 2, 
-                    g_vecInfo[i].g_ptObjPos.y - g_vecInfo[i].g_ptObjScale.y / 2,
-                    g_vecInfo[i].g_ptObjPos.x + g_vecInfo[i].g_ptObjScale.x / 2,
-                    g_vecInfo[i].g_ptObjPos.y + g_vecInfo[i].g_ptObjScale.y / 2);
-            }
-
-            // DC 의 펜과 브러쉬를 원래 펜과 브러쉬로 되돌림
-            (HPEN)SelectObject(hdc, hDefaultPen);
-            (HBRUSH)SelectObject(hdc, hDefaultBrush);
-
-            // 다쓴 펜, 브러쉬 삭제 요청
-            DeleteObject(hRedPen);
-            DeleteObject(hBlueBrush);
-
-
             // 그리기 종료
             EndPaint(hWnd, &ps);
         }
         break;
     case WM_KEYDOWN:
-    {
-        /*switch (wParam)
-        {
-        case VK_UP:
-            g_ptObjPos.y -= 10;
-            InvalidateRect(hWnd, nullptr, true);
-            break;
-        case VK_DOWN:
-            g_ptObjPos.y += 10;
-            InvalidateRect(hWnd, nullptr, true);
-            break;
-        case VK_LEFT:
-            g_ptObjPos.x -= 10;
-            InvalidateRect(hWnd, nullptr, true);
-            break;
-        case VK_RIGHT:
-            g_ptObjPos.x += 10;
-            InvalidateRect(hWnd, nullptr, true);
-            break;
-        }*/
-    }
+
         break;
     case WM_LBUTTONDOWN:
-    {
-        g_ptLT.x = LOWORD(lParam);
-        g_ptLT.y = HIWORD(lParam);
-        bLbtnDown = true;
-    }
+
     break;
     case WM_LBUTTONUP:
-    {
-        tObjInfo info = {};
-        info.g_ptObjPos.x = (g_ptLT.x + g_ptRB.x) / 2;
-        info.g_ptObjPos.y = (g_ptLT.y + g_ptRB.y) / 2;
-        
-        info.g_ptObjScale.x = abs(g_ptLT.x - g_ptRB.x); // * abs : 절대값 함수
-        info.g_ptObjScale.y = abs(g_ptLT.y - g_ptRB.y);
 
-        g_vecInfo.push_back(info);
-        bLbtnDown = false;
-        InvalidateRect(hWnd, nullptr, true);
-    }
     break;
     case WM_MOUSEMOVE:
-    {
-        g_ptRB.x = LOWORD(lParam);
-        g_ptRB.y = HIWORD(lParam);
-        InvalidateRect(hWnd, nullptr, true);
-
-    }
+ 
     break;
     case WM_TIMER:
-    {
-        int a = 0;
-    }
+  
     case WM_DESTROY:
         PostQuitMessage(0);
         break;
