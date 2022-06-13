@@ -1,10 +1,10 @@
 #include "pch.h"
 #include "CCore.h"
 #include "CObject.h"
-#include "CTimeMgr.h"
-#include "KeyMgr.h"
 
-CObject g_obj;
+#include "TimeMgr.h"
+#include "KeyMgr.h"
+#include "SceneMgr.h"
 
 
 CCore::CCore()
@@ -43,12 +43,11 @@ int CCore::init(HWND _hwnd, POINT _ptResolution)
 
 
 	// Manager 초기화
-	CTimeMgr::GetInst()->init();
-	KeyMgr::GetInst()->init();
+	TimeMgr::MgrINIT;
+	KeyMgr::MgrINIT;
+	SceneMgr::MgrINIT;
 
-	g_obj.SetPos(Vec2(m_ptResolution.x / 2, m_ptResolution.y / 2));
-	g_obj.SetScale(Vec2(100,100));
-
+	
 	return S_OK;
 }
 
@@ -56,47 +55,24 @@ int CCore::init(HWND _hwnd, POINT _ptResolution)
 void CCore::progress()
 {
 	// Manager Update
-	CTimeMgr::GetInst()->update();
-	KeyMgr::GetInst()->update();
+	TimeMgr::MgrUPDATE;
+	KeyMgr::MgrUPDATE;
+	SceneMgr::MgrUPDATE;
 
+	// =========
+	// Rendering
+	// =========
 
-	update();
-
-	render();
-}
-
-void CCore::update()
-{
-	Vec2 vPos = g_obj.GetPos();
-	
-	if (KeyMgr::GetInst()->GetKeyState(KEY::LEFT) == KEY_STATE::HOLD)
-	{
-		vPos.x -= 100.f * fDeltaTime;
-	}
-	if (KeyMgr::GetInst()->GetKeyState(KEY::RIGHT) == KEY_STATE::HOLD)
-	{
-		vPos.x += 100.f * fDeltaTime;
-	}
-	
-
-	g_obj.SetPos(vPos);
-}
-
-void CCore::render()
-{
 	// 화면 Clear
 	Rectangle(m_memDC, -1, -1, m_ptResolution.x + 1, m_ptResolution.y + 1);
 
-	// 그리기
-	Vec2 vPos = g_obj.GetPos();
-	Vec2 vScale = g_obj.GetScale();
-
-	Rectangle(m_memDC,  (int)(vPos.x - vScale.x / 2.f)
-					, (int)(vPos.y - vScale.y / 2.f)
-					, (int)(vPos.x + vScale.x / 2.f)
-					, (int)(vPos.y + vScale.y / 2.f));
-
+	// SceneMgr 렌더
+	SceneMgr::GetInst()->render(m_memDC);
 
 	BitBlt(m_hdc, 0, 0, m_ptResolution.x, m_ptResolution.y,
 		m_memDC, 0, 0, SRCCOPY);
 }
+
+
+
+	
