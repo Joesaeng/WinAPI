@@ -6,11 +6,17 @@
 #define SINGLE(type) public:static type* GetInst() { static type mgr; return &mgr; }\
 						private: type(); ~type();
 
-#define fDeltaTime TimeMgr::GetInst()->GetfDT() // 델타타임
-#define DeltaTime TimeMgr::GetInst()->GetDT()
+#define fDeltaTime TimeMgr::GetInst()->GetfDT() // 델타타임(float)
+#define DeltaTime TimeMgr::GetInst()->GetDT()   // 델타타임(double)
 
 #define MgrINIT GetInst()->init() // 매니저 초기화
 #define MgrUPDATE GetInst()->update() // 매니저 업데이트
+
+#define KEY_CHECK(key, state) KeyMgr::GetInst()->GetKeyState(key) == state
+#define KEY_HOLD(key) KEY_CHECK(key, KEY_STATE::HOLD)
+#define KEY_TAP(key) KEY_CHECK(key, KEY_STATE::TAP)
+#define KEY_AWAY(key) KEY_CHECK(key, KEY_STATE::AWAY)
+#define KEY_NONE(key) KEY_CHECK(key, KEY_STATE::NONE)
 
 enum class GROUP_TYPE
 {
