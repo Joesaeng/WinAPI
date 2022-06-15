@@ -34,6 +34,10 @@ void TimeMgr::update()
 	// 이전 카운트 값을 현재값으로 갱신(다음번 계산을 위해서)
 	m_llPrevCount = m_llCurCount;
 
+	
+}
+void TimeMgr::render()
+{
 	++m_iCallCount;
 	m_dAcc += m_dDT;
 

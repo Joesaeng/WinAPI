@@ -1,11 +1,13 @@
 #include "pch.h"
 #include "CScene_Start.h"
 
-#include "CObject.h"
+#include "PathMgr.h"
 
+#include "CObject.h"
 #include "CPlayer.h"
 #include "CMonster.h"
 #include "CCore.h"
+#include "CTextrue.h"
 
 CScene_Start::CScene_Start()
 {
@@ -17,6 +19,15 @@ CScene_Start::~CScene_Start()
 
 void CScene_Start::Enter()
 {
+	// Texture 로딩
+	CTextrue* pTex = new CTextrue;
+
+	wstring strFilepath = PathMgr::GetInst()->GetContentPath();
+	strFilepath += L"texture\\player.bmp";
+	pTex->Load(strFilepath);
+
+	delete pTex;
+
 	// Player Object 추가
 	CObject* pObj = new CPlayer;
 	pObj->SetPos(Vec2(640.f,384.f));

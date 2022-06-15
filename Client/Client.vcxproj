@@ -78,9 +78,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)Output\bin_debug\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Output\bin\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -154,6 +156,7 @@
     <ClInclude Include="CScene_Start.h" />
     <ClInclude Include="CSound.h" />
     <ClInclude Include="CTextrue.h" />
+    <ClInclude Include="PathMgr.h" />
     <ClInclude Include="TimeMgr.h" />
     <ClInclude Include="define.h" />
     <ClInclude Include="framework.h" />
@@ -175,6 +178,7 @@
     <ClCompile Include="CScene_Start.cpp" />
     <ClCompile Include="CSound.cpp" />
     <ClCompile Include="CTextrue.cpp" />
+    <ClCompile Include="PathMgr.cpp" />
     <ClCompile Include="TimeMgr.cpp" />
     <ClCompile Include="KeyMgr.cpp" />
     <ClCompile Include="main.cpp" />
