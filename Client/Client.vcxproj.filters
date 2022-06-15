@@ -62,6 +62,9 @@
     <Filter Include="Engine\03 Manager\PathMgr">
       <UniqueIdentifier>{03f11983-5488-41a0-b4c3-279929b0dec0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03 Manager\ResourceMgr">
+      <UniqueIdentifier>{3fc2d8f7-e724-44e9-8fea-8f83effa3cd8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCore.h">
@@ -116,7 +119,7 @@
     <ClInclude Include="CRes.h">
       <Filter>Engine\06 Resource</Filter>
     </ClInclude>
-    <ClInclude Include="CTextrue.h">
+    <ClInclude Include="CTexture.h">
       <Filter>Engine\06 Resource\Texture</Filter>
     </ClInclude>
     <ClInclude Include="CSound.h">
@@ -124,6 +127,9 @@
     </ClInclude>
     <ClInclude Include="PathMgr.h">
       <Filter>Engine\03 Manager\PathMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceMgr.h">
+      <Filter>Engine\03 Manager\ResourceMgr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -161,7 +167,7 @@
     <ClCompile Include="CRes.cpp">
       <Filter>Engine\06 Resource</Filter>
     </ClCompile>
-    <ClCompile Include="CTextrue.cpp">
+    <ClCompile Include="CTexture.cpp">
       <Filter>Engine\06 Resource\Texture</Filter>
     </ClCompile>
     <ClCompile Include="CSound.cpp">
@@ -169,6 +175,9 @@
     </ClCompile>
     <ClCompile Include="PathMgr.cpp">
       <Filter>Engine\03 Manager\PathMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceMgr.cpp">
+      <Filter>Engine\03 Manager\ResourceMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

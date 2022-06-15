@@ -3,17 +3,23 @@
 // 미리 컴파일된 헤더
 
 #include <Windows.h>
-#include "define.h"
-#include "struct.h"
 #include <iostream>
-#include <assert.h>
-
 
 #include <vector>
 using std::vector;
 
+#include <map>
+using std::map;
+using std::make_pair;
+
 #include <cmath>
+#include <assert.h>
 
 #include <string>
 using std::string;
 using std::wstring;
+
+#pragma comment(lib, "Msimg32.lib")
+
+#include "define.h"
+#include "struct.h"

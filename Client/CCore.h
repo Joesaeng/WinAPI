@@ -21,6 +21,7 @@ private:
 
 public:
 	HWND GetMainHwnd() { return m_hwnd; }
+	HDC GetMainDC() { return m_hdc; }
 	POINT GetResolution() { return m_ptResolution; }
 
 };
