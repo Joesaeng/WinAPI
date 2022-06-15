@@ -8,6 +8,7 @@ private:
     float       m_fSpeed;
     float       m_fMaxDistance;
     int         m_iDir; // 1, -1
+    
 
 
 public:
@@ -16,6 +17,9 @@ public:
     void SetMoveDistance(float _Distance) { m_fMaxDistance = _Distance; }
     void SetCenterPos(Vec2 _vPos) { m_vCenterPos = _vPos; }
         
+private:
+    void MonsterFire();
+
 
 public:
     virtual void update();

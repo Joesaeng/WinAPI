@@ -2,6 +2,11 @@
 #include "CMonster.h"
 
 #include "TimeMgr.h"
+#include "SceneMgr.h"
+
+#include "CMissile.h"
+#include "CScene.h"
+
 
 
 CMonster::CMonster()
@@ -14,6 +19,20 @@ CMonster::CMonster()
 
 CMonster::~CMonster()
 {
+}
+
+void CMonster::MonsterFire()
+{
+	Vec2 vMissilePos = GetPos();
+	vMissilePos.y -= GetScale().y / 2.f;
+
+	CMissile* pMissile = new CMissile;
+	pMissile->SetPos(vMissilePos);
+	pMissile->SetScale(Vec2(10.f, 10.f));
+	pMissile->SetDir(false);
+
+	CScene* pCurScene = SceneMgr::GetInst()->GetCurScene();
+	pCurScene->AddObject(pMissile, GROUP_TYPE::MISSILE);
 }
 
 void CMonster::update()
@@ -33,5 +52,4 @@ void CMonster::update()
 	}
 
 	SetPos(vCurPos);
-
 }

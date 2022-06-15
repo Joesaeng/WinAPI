@@ -2,19 +2,26 @@
 #include "CObject.h"
 
 
-
 class CMissile :
     public CObject
 {
 private:
-    float     m_iDir; // 위 아래 방향
+    float     m_fTheta; // 이동 방향
+
+    Vec2      m_vDir;
 
 public:
-    void SetDir(bool _bUp){if (_bUp) m_iDir = -1; else m_iDir = 1;}
+    void SetDir(float _fTheta) { m_fTheta = _fTheta; }
+    void SetDir(Vec2 _vDir) 
+    { 
+        m_vDir = _vDir;
+        m_vDir.Normalize();
+    }
 
 public:
     virtual void update();
     virtual void render(HDC _dc);
+    // 이동(방향 *속도)
 
 public:
     CMissile();
