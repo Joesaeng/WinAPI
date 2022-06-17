@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CCollider.h" />
     <ClInclude Include="CCore.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="CMissile.h" />
@@ -158,6 +159,7 @@
     <ClInclude Include="CTexture.h" />
     <ClInclude Include="PathMgr.h" />
     <ClInclude Include="ResourceMgr.h" />
+    <ClInclude Include="SelectGDI.h" />
     <ClInclude Include="TimeMgr.h" />
     <ClInclude Include="define.h" />
     <ClInclude Include="framework.h" />
@@ -169,6 +171,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CCollider.cpp" />
     <ClCompile Include="CCore.cpp" />
     <ClCompile Include="CMissile.cpp" />
     <ClCompile Include="CMonster.cpp" />
@@ -181,6 +184,7 @@
     <ClCompile Include="CTexture.cpp" />
     <ClCompile Include="PathMgr.cpp" />
     <ClCompile Include="ResourceMgr.cpp" />
+    <ClCompile Include="SelectGDI.cpp" />
     <ClCompile Include="TimeMgr.cpp" />
     <ClCompile Include="KeyMgr.cpp" />
     <ClCompile Include="main.cpp" />

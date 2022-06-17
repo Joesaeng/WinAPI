@@ -16,7 +16,7 @@ void PathMgr::init()
 	GetCurrentDirectory(255, m_szContentPath);// 현재 Directory 얻어옴
 
 	// 상위 폴더로
-	int iLen = wcslen(m_szContentPath);
+	int iLen = (int)wcslen(m_szContentPath);
 	// + bin\\content
 	for (int i = iLen - 1; 0 <= i; --i)
 	{

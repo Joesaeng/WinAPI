@@ -6,7 +6,7 @@
 
 #include "CMissile.h"
 #include "CScene.h"
-
+#include "CCollider.h"
 
 
 CMonster::CMonster()
@@ -15,6 +15,8 @@ CMonster::CMonster()
 	, m_fMaxDistance(50.f)
 	, m_iDir(1)
 {
+	CreateCollider();
+	GetCollider()->SetScale(Vec2(40.f, 40.f));
 }
 
 CMonster::~CMonster()

@@ -38,6 +38,8 @@ void SceneMgr::init()
 void SceneMgr::update()
 {
 	m_pCurScene->update();
+
+	m_pCurScene->finalUpdate();
 }
 
 void SceneMgr::render(HDC _dc)
