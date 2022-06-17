@@ -5,11 +5,11 @@
 
 #include "SelectGDI.h"
 
+UINT CCollider::g_iNextID = 0;
+
 CCollider::CCollider()
 	: m_pOwner(nullptr)
-	, m_vOffsetPos(Vec2(0.f, 0.f))
-	, m_vFinalPos(Vec2(0.f, 0.f))
-	, m_vColliderScale(Vec2(0.f, 0.f))
+	, m_iID(g_iNextID++)
 {
 }
 

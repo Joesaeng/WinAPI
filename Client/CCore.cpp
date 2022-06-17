@@ -6,6 +6,7 @@
 #include "KeyMgr.h"
 #include "SceneMgr.h"
 #include "PathMgr.h"
+#include "CollisionMgr.h"
 
 
 CCore::CCore()
@@ -56,6 +57,7 @@ int CCore::init(HWND _hwnd, POINT _ptResolution)
 	KeyMgr::MgrINIT;
 	PathMgr::MgrINIT;
 	SceneMgr::MgrINIT;
+
 	
 	
 	return S_OK;
@@ -68,6 +70,7 @@ void CCore::progress()
 	TimeMgr::MgrUPDATE;
 	KeyMgr::MgrUPDATE;
 	SceneMgr::MgrUPDATE;
+	CollisionMgr::MgrUPDATE;
 
 	// =========
 	// Rendering
