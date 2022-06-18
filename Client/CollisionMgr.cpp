@@ -6,6 +6,7 @@
 #include "CObject.h"
 #include "CCollider.h"
 
+
 CollisionMgr::CollisionMgr()
 	: m_arrCheak{}
 {}
@@ -36,6 +37,7 @@ void CollisionMgr::CollisionGroupUpdate(GROUP_TYPE _eLeft, GROUP_TYPE _eRight)
 	const vector<CObject*>& vecLeft = pCurScene->GetGroupObject(_eLeft);
 	const vector<CObject*>& vecRight = pCurScene->GetGroupObject(_eRight);
 
+	map<ULONGLONG, bool>::iterator iter;
 	for (size_t i = 0; i < vecLeft.size(); ++i)
 	{
 		// Collider가 없는 오브젝트를 받아온 경우
@@ -48,13 +50,47 @@ void CollisionMgr::CollisionGroupUpdate(GROUP_TYPE _eLeft, GROUP_TYPE _eRight)
 			if (nullptr == vecRight[j]->GetCollider() || vecLeft[i] == vecRight[j])
 				continue;
 
-			if (IsCollision(vecLeft[i]->GetCollider(), vecRight[j]->GetCollider()))
-			{
+			CCollider* pLeftCol = vecLeft[i]->GetCollider();
+			CCollider* pRightCol = vecRight[j]->GetCollider();
 
+
+			// 두 충돌제 조합 아이디 생성
+			COLLIDER_ID ID;
+			ID.iLeft_id = pLeftCol->GetID();
+			ID.iRight_id = pRightCol->GetID();
+
+			iter = m_mapColInfo.find(ID.ID);
+
+			// 충돌 정보가 미등록 상태인 경우 등록(충돌을 false로)
+			if (m_mapColInfo.end() == iter)
+			{
+				m_mapColInfo.insert(make_pair(ID.ID, false));
+				iter = m_mapColInfo.find(ID.ID);
 			}
-			else
+
+			if (IsCollision(pLeftCol, pRightCol))// 현재 충돌 중
 			{
 
+				if (iter->second) // 이전에도 충돌 하고 있었고 현재 충돌 중이다.
+				{
+					pLeftCol->OnCollision(pRightCol);
+					pRightCol->OnCollision(pLeftCol);
+				}
+				else // 이번에 충돌했다.(이전에는 충돌하지 않았다.)
+				{
+					pLeftCol->OnCollisionEnter(pRightCol);
+					pRightCol->OnCollisionEnter(pLeftCol);
+					iter->second = true;
+				}
+			}
+			else // 현재 충돌 중이 아니다.
+			{
+				if (iter->second) // 이전에는 충돌 하고 있었다.(현재는 충돌하고 있지 않다.)
+				{
+					pLeftCol->OnCollisionExit(pRightCol);
+					pRightCol->OnCollisionExit(pLeftCol);
+					iter->second = false;
+				}
 			}
 		}
 	}

@@ -21,13 +21,23 @@ public:
 	Vec2 GetOffsetPos() { return m_vOffsetPos; }
 	Vec2 GetScale() { return m_vColliderScale; }
 
+	UINT GetID() { return m_iID; }
+
+	CCollider& operator = (CCollider& _other) = delete; // 대입연산자를 제거함
 
 public:
 	void finalUpdate();
 	void render(HDC _dc);
 
 public:
+	// 충돌 시점 함수
+	void OnCollision(CCollider* _pOther); // 충돌 중인 경우 호출되는 함수
+	void OnCollisionEnter(CCollider* _pOther); // 이번에 충돌한 경우 호출되는 함수
+	void OnCollisionExit(CCollider* _pOther); // 이번에 충돌에서 벗어나 ㄴ경우
+
+public:
 	CCollider();
+	CCollider(const CCollider& _origin);
 	~CCollider();
 
 	friend class CObject;

@@ -13,6 +13,14 @@ CCollider::CCollider()
 {
 }
 
+CCollider::CCollider(const CCollider& _origin)
+	: m_pOwner(nullptr)
+	, m_vOffsetPos(_origin.m_vOffsetPos)
+	, m_vColliderScale(_origin.m_vColliderScale)
+	, m_iID(g_iNextID++)
+{
+}
+
 CCollider::~CCollider()
 {
 }
@@ -35,6 +43,19 @@ void CCollider::render(HDC _dc)
 		, int(m_vFinalPos.y - m_vColliderScale.y / 2.f)
 		, int(m_vFinalPos.x + m_vColliderScale.x / 2.f)
 		, int(m_vFinalPos.y + m_vColliderScale.y / 2.f));
+}
+
+void CCollider::OnCollision(CCollider* _pOther)
+{
+
+}
+
+void CCollider::OnCollisionEnter(CCollider* _pOther)
+{
+}
+
+void CCollider::OnCollisionExit(CCollider* _pOther)
+{
 }
 
 
