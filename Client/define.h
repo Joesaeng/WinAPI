@@ -9,6 +9,8 @@
 #define fDeltaTime TimeMgr::GetInst()->GetfDT() // 델타타임(float)
 #define DeltaTime TimeMgr::GetInst()->GetDT()   // 델타타임(double)
 
+#define CLONE(type) type* Clone(){return new type(*this);}
+
 #define MgrINIT GetInst()->init() // 매니저 초기화
 #define MgrUPDATE GetInst()->update() // 매니저 업데이트
 

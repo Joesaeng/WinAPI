@@ -6,14 +6,14 @@ class CCollider;
 class CObject
 {
 private:
-	wstring		m_strName;
+	wstring		m_strName; // 오브젝트의 이름
 
 	Vec2		m_vPos;
 	Vec2		m_vScale;
 
 	CCollider*	m_pCollider;
 
-	bool		m_bAlive;
+	bool		m_bAlive; // 오브젝트의 생존
 
 public:
 	void SetPos(Vec2 _vPos) { m_vPos = _vPos; }
@@ -45,8 +45,11 @@ public:
 
 	void component_render(HDC _dc);
 
+	virtual CObject* Clone() = 0;
+
 public:
 	CObject();
+	CObject(const CObject& _origin);
 	virtual ~CObject();
 
 	friend class EventMgr;

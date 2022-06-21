@@ -9,7 +9,7 @@ private:
     float     m_fTheta; // 이동 방향
 
     Vec2      m_vDir;
-    float      m_deadCount;
+    float     m_deadCount;
     UINT      m_iDmg;
 
 
@@ -29,6 +29,9 @@ public:
     virtual void render(HDC _dc);
     // 이동(방향 *속도)
     virtual void OnCollisionEnter(CCollider* _pOther);
+
+    CLONE(CMissile)
+
 
 public:
     CMissile();

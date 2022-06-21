@@ -13,9 +13,9 @@ public:
 	void SetName(const wstring& _strName) { m_strName = _strName; }
 	const wstring& GetName() { return m_strName; }
 
-	void update();
-	void finalUpdate();
-	void render(HDC _dc);
+	virtual void update();
+	virtual void finalUpdate();
+	virtual void render(HDC _dc);
 
 	virtual void Enter() = 0;	// 해당 Scene 에 진입 시 호출
 	virtual void Exit() = 0;	// 해당 Scene 을 탈출 시 호출
@@ -24,6 +24,9 @@ public:
 	void AddObject(CObject* _pObj, GROUP_TYPE _eType){m_arrObj[(UINT)_eType].push_back(_pObj);}
 
 	const vector<CObject*>& GetGroupObject(GROUP_TYPE _eType) { return m_arrObj[(UINT)_eType]; }
+
+	void DeleteGroup(GROUP_TYPE _eTarget);
+	void DeleteAll();
 
 public:
 	CScene();

@@ -7,9 +7,10 @@
 
 #include "CCollider.h"
 CMissile::CMissile()
-	: m_fTheta(PI/4.f)
-	, m_vDir(Vec2(1.f,1.f))
+	: m_fTheta(PI / 4.f)
+	, m_vDir(Vec2(1.f, 1.f))
 	, m_deadCount(0.f)
+	, m_iDmg(0)
 {
 	m_vDir.Normalize();
 	CreateCollider();

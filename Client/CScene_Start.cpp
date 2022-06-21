@@ -10,6 +10,9 @@
 #include "CCore.h"
 #include "CTexture.h"
 
+#include "SceneMgr.h"
+#include "KeyMgr.h"
+
 
 CScene_Start::CScene_Start()
 {
@@ -19,6 +22,16 @@ CScene_Start::~CScene_Start()
 {
 }
 
+void CScene_Start::update()
+{
+	CScene::update();
+	
+	if (KEY_TAP(KEY::ENTER))
+	{
+		ChangeScene(SCENE_TYPE::TOOL);
+	}
+}
+
 void CScene_Start::Enter()
 {
 	// Player Object 추가
@@ -26,6 +39,11 @@ void CScene_Start::Enter()
 	pObj->SetPos(Vec2(640.f,584.f));
 	pObj->SetScale(Vec2(100.f,100.f));
 	AddObject(pObj, GROUP_TYPE::PLAYER);
+
+	CObject* pOtherPlayer = pObj->Clone();
+	pOtherPlayer->SetPos(Vec2(580.f, 584.f));
+	AddObject(pOtherPlayer, GROUP_TYPE::PLAYER);
+
 
 	// 몬스터 배치
 	int iMonCount = 5;
@@ -58,5 +76,7 @@ void CScene_Start::Enter()
 
 void CScene_Start::Exit()
 {
+	DeleteAll();
+
 	CollisionMgr::GetInst()->Reset();
 }
