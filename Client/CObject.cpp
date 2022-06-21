@@ -7,9 +7,11 @@
 #include "CCollider.h"
 
 CObject::CObject()
-	: m_vPos{}
+	: m_strName{}
+	, m_vPos{}
 	, m_vScale{}
 	, m_pCollider(nullptr)
+	, m_pAnimator(nullptr)
 	, m_bAlive(true)
 {
 }
@@ -19,6 +21,7 @@ CObject::CObject(const CObject& _origin)
 	, m_vPos(_origin.m_vPos)
 	, m_vScale(_origin.m_vScale)
 	, m_pCollider(nullptr)
+	, m_pAnimator(nullptr)
 	, m_bAlive(true)
 {
 	if (nullptr != _origin.m_pCollider)
@@ -32,6 +35,9 @@ CObject::~CObject()
 {
 	if (nullptr != m_pCollider)
 		delete m_pCollider;
+
+	if (nullptr != m_pAnimator)
+		delete m_pAnimator;
 }
 
 

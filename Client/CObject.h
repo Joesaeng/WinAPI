@@ -2,6 +2,7 @@
 
 
 class CCollider;
+class CAnimator;
 
 class CObject
 {
@@ -11,7 +12,9 @@ private:
 	Vec2		m_vPos;
 	Vec2		m_vScale;
 
+	// Component
 	CCollider*	m_pCollider;
+	CAnimator*  m_pAnimator;
 
 	bool		m_bAlive; // 오브젝트의 생존
 
