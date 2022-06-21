@@ -14,6 +14,7 @@ CMonster::CMonster()
 	, m_fSpeed(100.f)
 	, m_fMaxDistance(50.f)
 	, m_iDir(1)
+	, m_iHP(15)
 {
 	CreateCollider();
 	GetCollider()->SetScale(Vec2(40.f, 40.f));
@@ -23,19 +24,7 @@ CMonster::~CMonster()
 {
 }
 
-void CMonster::MonsterFire()
-{
-	Vec2 vMissilePos = GetPos();
-	vMissilePos.y -= GetScale().y / 2.f;
 
-	CMissile* pMissile = new CMissile;
-	pMissile->SetPos(vMissilePos);
-	pMissile->SetScale(Vec2(10.f, 10.f));
-	pMissile->SetDir(false);
-
-	CScene* pCurScene = SceneMgr::GetInst()->GetCurScene();
-	pCurScene->AddObject(pMissile, GROUP_TYPE::MISSILE);
-}
 
 void CMonster::update()
 {
@@ -54,4 +43,36 @@ void CMonster::update()
 	}
 
 	SetPos(vCurPos);
+}
+
+void CMonster::OnCollisionEnter(CCollider* _pOther)
+{
+	CObject* pOtherObj = _pOther->GetObj();
+	if (pOtherObj->GetName() == L"Missile_Player")
+	{
+		isHit(_pOther->GetObj());
+		if(0 >= m_iHP)
+			DeleteObject(this);
+	}
+}
+
+void CMonster::MonsterFire()
+{
+	Vec2 vMissilePos = GetPos();
+	vMissilePos.y -= GetScale().y / 2.f;
+
+	CMissile* pMissile = new CMissile;
+	pMissile->SetPos(vMissilePos);
+	pMissile->SetScale(Vec2(10.f, 10.f));
+	pMissile->SetDir(false);
+
+	CScene* pCurScene = SceneMgr::GetInst()->GetCurScene();
+	pCurScene->AddObject(pMissile, GROUP_TYPE::PROJ_MONSTER);
+}
+
+void CMonster::isHit(CObject* _pHit)
+{
+	CMissile* pMissile = dynamic_cast<CMissile*>(_pHit);
+	UINT dmg = pMissile->GetDmg();
+	m_iHP -= dmg;
 }

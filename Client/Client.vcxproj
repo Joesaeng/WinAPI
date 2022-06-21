@@ -158,6 +158,8 @@
     <ClInclude Include="CScene_Start.h" />
     <ClInclude Include="CSound.h" />
     <ClInclude Include="CTexture.h" />
+    <ClInclude Include="EventMgr.h" />
+    <ClInclude Include="func.h" />
     <ClInclude Include="PathMgr.h" />
     <ClInclude Include="ResourceMgr.h" />
     <ClInclude Include="SelectGDI.h" />
@@ -184,6 +186,8 @@
     <ClCompile Include="CScene_Start.cpp" />
     <ClCompile Include="CSound.cpp" />
     <ClCompile Include="CTexture.cpp" />
+    <ClCompile Include="EventMgr.cpp" />
+    <ClCompile Include="func.cpp" />
     <ClCompile Include="PathMgr.cpp" />
     <ClCompile Include="ResourceMgr.cpp" />
     <ClCompile Include="SelectGDI.cpp" />

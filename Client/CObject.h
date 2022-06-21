@@ -6,10 +6,14 @@ class CCollider;
 class CObject
 {
 private:
-	Vec2	m_vPos;
-	Vec2	m_vScale;
+	wstring		m_strName;
 
-	CCollider* m_pCollider;
+	Vec2		m_vPos;
+	Vec2		m_vScale;
+
+	CCollider*	m_pCollider;
+
+	bool		m_bAlive;
 
 public:
 	void SetPos(Vec2 _vPos) { m_vPos = _vPos; }
@@ -18,10 +22,21 @@ public:
 	Vec2 GetPos() { return m_vPos; }
 	Vec2 GetScale() { return m_vScale; }
 
+	void SetName(const wstring& _strName) { m_strName = _strName; }
+	const wstring& GetName() { return m_strName; }
+
 	CCollider* GetCollider() { return m_pCollider; }
 
+	bool IsDead() { return !m_bAlive; }
 
 	void CreateCollider();
+
+	virtual void OnCollision(CCollider* _pOther) {}			// 충돌 중인 경우 호출되는 함수
+	virtual void OnCollisionEnter(CCollider* _pOther) {}	// 이번에 충돌한 경우 호출되는 함수
+	virtual void OnCollisionExit(CCollider* _pOther) {}		// 이번에 충돌에서 벗어난 경우
+private:
+	void SetDead() { m_bAlive = false; }
+
 
 public:
 	virtual void update() = 0;
@@ -33,5 +48,7 @@ public:
 public:
 	CObject();
 	virtual ~CObject();
+
+	friend class EventMgr;
 };
 
