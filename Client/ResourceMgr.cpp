@@ -39,11 +39,11 @@ CTexture* ResourceMgr::LoadTexture(const wstring& _strKey, const wstring& _strRe
 
 CTexture* ResourceMgr::FindTexture(const wstring& _strKey)
 {
-	map<wstring, CTexture*>::iterator iter = m_mapTex.find(_strKey);
+	map<wstring, CRes*>::iterator iter = m_mapTex.find(_strKey);
 	if (iter == m_mapTex.end())
 	{
 		return nullptr;
 	}
 
-	return iter->second;
+	return (CTexture*)iter->second;
 }

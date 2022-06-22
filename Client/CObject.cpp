@@ -5,6 +5,7 @@
 #include "TimeMgr.h"
 
 #include "CCollider.h"
+#include "CAnimator.h"
 
 CObject::CObject()
 	: m_strName{}
@@ -24,10 +25,15 @@ CObject::CObject(const CObject& _origin)
 	, m_pAnimator(nullptr)
 	, m_bAlive(true)
 {
-	if (nullptr != _origin.m_pCollider)
+	if (_origin.m_pCollider)
 	{
 		m_pCollider = new CCollider(*_origin.m_pCollider);
 		m_pCollider->m_pOwner = this;
+	}
+	if (_origin.m_pAnimator)
+	{
+		m_pAnimator = new CAnimator(*_origin.m_pAnimator);
+		m_pAnimator->m_pOwner = this;
 	}
 }
 
@@ -39,8 +45,6 @@ CObject::~CObject()
 	if (nullptr != m_pAnimator)
 		delete m_pAnimator;
 }
-
-
 
 void CObject::finalUpdate()
 {
@@ -62,10 +66,21 @@ void CObject::component_render(HDC _dc)
 	{
 		m_pCollider->render(_dc);
 	}
+
+	if (nullptr != m_pAnimator)
+	{
+		m_pAnimator->render(_dc);
+	}
 }
 
 void CObject::CreateCollider()
 {
 	m_pCollider = new CCollider;
 	m_pCollider->m_pOwner = this;
+}
+
+void CObject::CreateAnimator()
+{
+	m_pAnimator = new CAnimator;
+	m_pAnimator->m_pOwner = this;
 }
