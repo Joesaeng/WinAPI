@@ -48,6 +48,8 @@ enum class KEY
 	SPACE,
 	ENTER,
 	ESC,
+	LBTN,
+	RBTN,
 
 
 	LAST,
@@ -64,6 +66,7 @@ class KeyMgr
 
 private:
 	vector<tKeyInfo> m_vecKey;
+	Vec2			m_vCurMousePos; // 마우스의 현재 위치
 
 public:
 	void init();
@@ -71,5 +74,6 @@ public:
 
 public:
 	KEY_STATE GetKeyState(KEY _ekey){return m_vecKey[(int)_ekey].eState;}
+	Vec2 GetMousePos() { return m_vCurMousePos; }
 };
 

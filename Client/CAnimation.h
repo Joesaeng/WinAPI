@@ -28,7 +28,7 @@ public:
 	bool IsFinish() { return m_bFinish; }
 	void SetFrame(int _iFrameIdx) { m_bFinish = false; m_iCurFrame = _iFrameIdx; m_fAccTime = 0.f; }
 	tAnimFrame& GetFrame(size_t _iIdx) { return m_vecFrame[_iIdx]; }
-	size_t GetMaxFrame() { return m_vecFrame.size(); }
+	UINT GetMaxFrame() { return (UINT)m_vecFrame.size(); }
 private:
 	void SetName(const wstring& _strName) { m_strName = _strName; }
 

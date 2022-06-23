@@ -6,6 +6,7 @@
 #include "CTexture.h"
 #include "CObject.h"
 #include "CAnimator.h"
+#include "CCamera.h"
 
 CAnimation::CAnimation()
 	: m_pAnimator(nullptr)
@@ -52,6 +53,8 @@ void CAnimation::render(HDC _dc)
 	Vec2 vPos = pObj->GetPos();
 	vPos += m_vecFrame[m_iCurFrame].vOffset; // Object Position에 Offset 만큼 추가 이동위치
 	
+	// 렌더링 좌표로 변환
+	vPos = CCamera::GetInst()->GetRenderPos(vPos);
 
 	TransparentBlt(_dc
 		, (int)(vPos.x - m_vecFrame[m_iCurFrame].vSlice.x / 2.f)

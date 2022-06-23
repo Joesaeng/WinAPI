@@ -50,18 +50,66 @@ public:
 	}
 	Vec2 operator / (Vec2 _vOther)
 	{
-		assert (0.f == _vOther.x || 0.f == _vOther.y && "벡터 나눗셈에 0이 있습니다");
+		assert (!(0.f == _vOther.x || 0.f == _vOther.y) && "벡터 나눗셈에 0이 있습니다");
 		return Vec2(x / _vOther.x, y / _vOther.y);
+	}
+
+	Vec2 operator * (float _f)
+	{
+		return Vec2(x * _f, y * _f);
 	}
 
 	Vec2 operator * (int _i)
 	{
 		return Vec2(x * (float)_i, y * (float)_i);
 	}
+	Vec2 operator * (UINT _i)
+	{
+		return Vec2(x * (float)_i, y * (float)_i);
+	}
 	Vec2 operator / (float _f)
 	{
-		assert(0.f == _f && "나눌 float 값이 0입니다.");
+		assert(!(0.f == _f) && "나눌 float 값이 0입니다.");
 		return Vec2(x / _f, y / _f);
+	}
+	bool operator == (Vec2 _vOther)
+	{
+		if (x == _vOther.x && y == _vOther.y)
+			return true;
+		else
+			return false;
+	}
+	bool operator != (Vec2 _vOther)
+	{
+		return !((*this) == _vOther);
+	}
+	bool operator <= (Vec2 _vOther)
+	{
+		if (x <= _vOther.x && y <= _vOther.y)
+			return true;
+		else
+			return false;
+	}
+	bool operator >= (Vec2 _vOther)
+	{
+		if (x >= _vOther.x && y >= _vOther.y)
+			return true;
+		else
+			return false;
+	}
+	bool operator < (Vec2 _vOther)
+	{
+		if (x < _vOther.x && y < _vOther.y)
+			return true;
+		else
+			return false;
+	}
+	bool operator > (Vec2 _vOther)
+	{
+		if (x > _vOther.x && y > _vOther.y)
+			return true;
+		else
+			return false;
 	}
 public:
 	Vec2()

@@ -8,7 +8,7 @@
 #include "PathMgr.h"
 #include "CollisionMgr.h"
 #include "EventMgr.h"
-
+#include "CCamera.h"
 
 CCore::CCore()
 	: m_hwnd(0)
@@ -70,7 +70,7 @@ void CCore::progress()
 	// Manager Update
 	TimeMgr::MgrUPDATE;
 	KeyMgr::MgrUPDATE;
-
+	CCamera::MgrUPDATE;
 	// ============
 	// Scene Update
 	// ============

@@ -21,7 +21,7 @@ CPlayer::CPlayer()
 	SetName(L"Player");
 	CreateCollider();
 	GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
-	GetCollider()->SetScale(Vec2(48.f, 64.f));
+	GetCollider()->SetScale(Vec2(32.f, 32.f));
 
 
 	// Texture ·Îµù
