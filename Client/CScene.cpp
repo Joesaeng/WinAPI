@@ -3,10 +3,13 @@
 
 #include "CObject.h"
 #include "CCore.h"
-
+#include "CTile.h"
+#include "ResourceMgr.h"
 
 
 CScene::CScene()
+	:m_iTileX(0)
+	, m_iTileY(0)
 {
 }
 
@@ -76,5 +79,26 @@ void CScene::DeleteAll()
 	for (UINT i = 0; i < (UINT)GROUP_TYPE::END; ++i)
 	{
 		DeleteGroup((GROUP_TYPE)i);
+	}
+}
+
+void CScene::CreateTile(UINT _iXcount, UINT _iYcount)
+{
+	m_iTileX = _iXcount;
+	m_iTileY = _iYcount;
+
+	CTexture* pTileTex = ResourceMgr::GetInst()->LoadTexture(L"Tile", L"texture\\tile\\tile.bmp");
+	// 타일 생성
+	for (UINT i = 0; i < _iYcount; ++i)
+	{
+		for (UINT j = 0; j < _iXcount; ++j)
+		{
+			CTile* pTile = new CTile();
+
+			pTile->SetPos(Vec2((float)j * TILE_SIZE, (float)i * TILE_SIZE));
+			pTile->SetTexture(pTileTex);
+
+			AddObject(pTile, GROUP_TYPE::TILE);
+		}
 	}
 }
