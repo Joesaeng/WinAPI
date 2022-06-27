@@ -36,9 +36,9 @@ public:
 
 	void DeleteGroup(GROUP_TYPE _eTarget);
 	void DeleteAll();
-
 	void CreateTile(UINT _iXcount, UINT _iYcount);
 
+	vector<CObject*>& GetUIGroup() { return m_arrObj[(UINT)GROUP_TYPE::UI]; }
 public:
 	CScene();
 	virtual ~CScene();

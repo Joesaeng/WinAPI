@@ -7,6 +7,7 @@
 #include "SceneMgr.h"
 #include "PathMgr.h"
 #include "CollisionMgr.h"
+#include "UIMgr.h"
 #include "EventMgr.h"
 #include "CCamera.h"
 
@@ -75,7 +76,12 @@ void CCore::progress()
 	// Scene Update
 	// ============
 	SceneMgr::MgrUPDATE;
+
+	// 충돌체크
 	CollisionMgr::MgrUPDATE;
+
+	// UI 이벤트 체크
+	UIMgr::MgrUPDATE;
 
 	// =========
 	// Rendering

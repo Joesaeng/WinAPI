@@ -50,6 +50,8 @@ void CObject::finalUpdate()
 {
 	if (m_pCollider)
 		m_pCollider->finalUpdate();
+	if (m_pAnimator)
+		m_pAnimator->finalupdate();
 }
 
 void CObject::render(HDC _dc)

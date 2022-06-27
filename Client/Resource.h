@@ -14,7 +14,6 @@
 #define IDR_MAINFRAME                   128
 #define IDD_TILECOUNT                   129
 #define IDC_XCOUNT                      1000
-#define IDC_EDIT2                       1001
 #define IDC_YCOUNT                      1001
 #define ID_32771                        32771
 #define ID_MENU_TILE                    32772

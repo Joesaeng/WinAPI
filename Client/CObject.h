@@ -1,5 +1,6 @@
 #pragma once
 
+#include "pch.h"
 #include "CCamera.h"
 
 
@@ -47,7 +48,7 @@ private:
 
 public:
 	virtual void update() = 0;
-	virtual void finalUpdate() final;
+	virtual void finalUpdate();
 	virtual void render(HDC _dc);
 
 	void component_render(HDC _dc);

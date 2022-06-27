@@ -92,6 +92,18 @@
     <Filter Include="Engine\04 Object\Tile">
       <UniqueIdentifier>{63118745-f7ad-48f0-b7dd-1f908a1ce5d0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04 Object\UI">
+      <UniqueIdentifier>{68d2b9cf-3933-4262-b132-6c2683568321}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03 Manager\UIMgr">
+      <UniqueIdentifier>{7163bf1f-b842-4545-89ad-722488013a88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04 Object\UI\PanelUI">
+      <UniqueIdentifier>{e9adcc8e-dc4b-4dad-a19b-fe286fc062dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04 Object\UI\BtnUI">
+      <UniqueIdentifier>{71d32538-9189-474c-8ffd-ab627adb3e6e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCore.h">
@@ -188,6 +200,18 @@
     <ClInclude Include="CTile.h">
       <Filter>Engine\04 Object\Tile</Filter>
     </ClInclude>
+    <ClInclude Include="CUI.h">
+      <Filter>Engine\04 Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIMgr.h">
+      <Filter>Engine\03 Manager\UIMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CPanelUI.h">
+      <Filter>Engine\04 Object\UI\PanelUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CBtnUI.h">
+      <Filter>Engine\04 Object\UI\BtnUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCore.cpp">
@@ -265,6 +289,18 @@
     </ClCompile>
     <ClCompile Include="CTile.cpp">
       <Filter>Engine\04 Object\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="CUI.cpp">
+      <Filter>Engine\04 Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIMgr.cpp">
+      <Filter>Engine\03 Manager\UIMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CPanelUI.cpp">
+      <Filter>Engine\04 Object\UI\PanelUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CBtnUI.cpp">
+      <Filter>Engine\04 Object\UI\BtnUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

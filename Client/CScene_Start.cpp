@@ -46,9 +46,9 @@ void CScene_Start::Enter()
 	pObj->SetScale(Vec2(100.f,100.f));
 	AddObject(pObj, GROUP_TYPE::PLAYER);
 
-	/*CObject* pOtherPlayer = pObj->Clone();
-	pOtherPlayer->SetPos(Vec2(580.f, 584.f));
-	AddObject(pOtherPlayer, GROUP_TYPE::PLAYER);*/
+	//CObject* pOtherPlayer = pObj->Clone();
+	//pOtherPlayer->SetPos(Vec2(580.f, 584.f));
+	//AddObject(pOtherPlayer, GROUP_TYPE::PLAYER);
 
 	//CCamera::GetInst()->SetTarget(pObj);
 

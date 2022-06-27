@@ -34,8 +34,8 @@ enum class GROUP_TYPE
 	PROJ_PLAYER,
 	PROJ_MONSTER,
 
-
-	END = 32
+	UI = 31,
+	END = 32,
 };
 
 enum class SCENE_TYPE
