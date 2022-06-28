@@ -53,7 +53,7 @@ void CScene_Start::Enter()
 	//CCamera::GetInst()->SetTarget(pObj);
 
 	// 몬스터 배치
-	int iMonCount = 5;
+	int iMonCount = 2;
 	float fMoveDist = 25.f;
 	float fObjScale = 50.f;
 
@@ -73,6 +73,9 @@ void CScene_Start::Enter()
 		pMonsterObj->SetMoveDistance(fMoveDist);
 		AddObject(pMonsterObj, GROUP_TYPE::MONSTER);
 	}
+	// 타일 로딩
+	//LoadTile(L"tile\\StartTile.tile");
+
 
 	// 충돌 지정
 	// Player 그룹과 Monster 그릅 간의 충돌체크

@@ -33,6 +33,8 @@ CCore::~CCore()
 		DeleteObject(m_arrPen[i]);
 	}
 }
+
+
 int CCore::init(HWND _hwnd, POINT _ptResolution)
 {
 	m_hwnd = _hwnd;

@@ -5,6 +5,8 @@
 #include "SceneMgr.h"
 #include "CScene.h"
 
+#include "UIMgr.h"
+
 EventMgr::EventMgr()
 {
 
@@ -64,6 +66,9 @@ void EventMgr::Excute(const tEvent& _eve)
 	{
 		// lParam : Next Scene Type
 		SceneMgr::GetInst()->ChangeScene((SCENE_TYPE)_eve.lParam);
+
+		// 포커스 UI 해제
+		UIMgr::GetInst()->SetFocusedUI(nullptr);
 	}
 		break;
 	}

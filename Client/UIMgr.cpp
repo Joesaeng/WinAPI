@@ -43,7 +43,7 @@ void UIMgr::update()
 
 			if (pTargetUI->m_bLbtnDown)
 			{
-				m_pFocuseUI->MouseLBtnClicked();
+				pTargetUI->MouseLBtnClicked();
 			}
 			// 왼쪽버튼 떼면 눌렸던 체크를 다시 해제한다
 			pTargetUI->m_bLbtnDown = false;
