@@ -106,14 +106,7 @@ void CScene_Tool::update()
 
 	SetTileIdx();
 
-	if (KEY_TAP(KEY::LSHIFT))
-	{
-		SaveTileData();
-	}
-	if (KEY_TAP(KEY::CTRL))
-	{
-		LoadTileData();
-	}
+	
 }
 
 void CScene_Tool::SetTileIdx()

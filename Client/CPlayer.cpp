@@ -17,7 +17,7 @@
 CPlayer::CPlayer()
 {
 	// Texture 로딩
-	//m_pTex = ResourceMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\player.bmp");
+	// m_pTex = ResourceMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Run.bmp");
 	SetName(L"Player");
 	CreateCollider();
 	GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
@@ -73,7 +73,29 @@ void CPlayer::update()
 
 void CPlayer::render(HDC _dc)
 {
-	component_render(_dc); // 컴포넌트(충돌체, etc ...)가 있는 경우 렌더
+	// component_render(_dc); // 컴포넌트(충돌체, etc ...)가 있는 경우 렌더
+	CTexture* pTex = ResourceMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\player.bmp");
+
+	Vec2 vPos = GetPos();
+	vPos = CCamera::GetInst()->GetRenderPos(vPos);
+
+	float width = (float)pTex->Width();
+	float height = (float)pTex->Height();
+	
+	BLENDFUNCTION bf = {};
+	bf.BlendOp = AC_SRC_OVER;
+	bf.BlendFlags = 0;
+	bf.AlphaFormat = AC_SRC_ALPHA;
+	bf.SourceConstantAlpha = 255;
+
+	AlphaBlend(_dc
+		, int(vPos.x - width / 2.f)
+		, int(vPos.y - height / 2.f)
+		, (int)width, (int)height
+		, pTex->GetDC()
+		, 0, 0
+		, (int)width, (int)height
+		, bf);
 }
 
 void CPlayer::CreateMissile()

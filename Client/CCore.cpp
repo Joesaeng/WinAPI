@@ -10,13 +10,13 @@
 #include "UIMgr.h"
 #include "EventMgr.h"
 #include "CCamera.h"
+#include "ResourceMgr.h"
+#include "CTexture.h"
 
 CCore::CCore()
 	: m_hwnd(0)
 	, m_ptResolution{}
 	, m_hdc(0)
-	, m_hBit(0)
-	, m_memDC(0)
 	, m_arrBrush{}
 	, m_arrPen{}
 {
@@ -24,9 +24,6 @@ CCore::CCore()
 CCore::~CCore()
 {
 	ReleaseDC(m_hwnd, m_hdc);
-
-	DeleteDC(m_memDC);
-	DeleteObject(m_hBit);
 
 	for (int i = 0; i < (UINT)PEN_TYPE::END; ++i)
 	{
@@ -47,21 +44,17 @@ int CCore::init(HWND _hwnd, POINT _ptResolution)
 
 	m_hdc = GetDC(m_hwnd);
 
-	// 이중 버퍼링 용도의 비트맵과 DC를 만든다.
-	m_hBit = CreateCompatibleBitmap(m_hdc, m_ptResolution.x, m_ptResolution.y);
-	m_memDC = CreateCompatibleDC(m_hdc);
-
-	HBITMAP hOldBit = (HBITMAP)SelectObject(m_memDC, m_hBit);
-	DeleteObject(hOldBit);
+	// 이중 버퍼링 용도의 텍스쳐 한장을 만든다.
+	m_pMemTex = ResourceMgr::GetInst()->CreateTexture(L"BackBuffer", (UINT)m_ptResolution.x, (UINT)m_ptResolution.y);
 
 	CreateBrushPen(); // 자주 사용할 펜 및 브러쉬 생성
 
 	// Manager 초기화
 	TimeMgr::MgrINIT;
 	KeyMgr::MgrINIT;
+	CCamera::MgrINIT;
 	PathMgr::MgrINIT;
 	SceneMgr::MgrINIT;
-
 	
 	
 	return S_OK;
@@ -90,13 +83,14 @@ void CCore::progress()
 	// =========
 	
 	// 화면 Clear
-	Rectangle(m_memDC, -1, -1, m_ptResolution.x + 1, m_ptResolution.y + 1);
+	Rectangle(m_pMemTex->GetDC() , -1, -1, m_ptResolution.x + 1, m_ptResolution.y + 1);
 
 	// SceneMgr 렌더
-	SceneMgr::GetInst()->render(m_memDC);
+	SceneMgr::GetInst()->render(m_pMemTex->GetDC());
+	CCamera::GetInst()->render(m_pMemTex->GetDC());
 
 	BitBlt(m_hdc, 0, 0, m_ptResolution.x, m_ptResolution.y,
-		m_memDC, 0, 0, SRCCOPY);
+		m_pMemTex->GetDC(), 0, 0, SRCCOPY);
 	TimeMgr::GetInst()->render(); // 윈도우 테이블에 프레임 출력
 
 	// =============

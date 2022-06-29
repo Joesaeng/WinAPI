@@ -85,6 +85,9 @@ void CScene_Start::Enter()
 	// Camera Look 지정
 	CCamera::GetInst()->SetLookAt(vResolution / 2.f);
 
+	// Camera 효과 지정
+	CCamera::GetInst()->CamEffect(CAM_EFFECT::FADE_OUT, 1.f);
+	CCamera::GetInst()->CamEffect(CAM_EFFECT::FADE_IN, 1.f);
 }
 
 void CScene_Start::Exit()

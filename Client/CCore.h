@@ -1,5 +1,7 @@
 #pragma once
 
+class CTexture;
+
 class CCore
 {
 	SINGLE(CCore);
@@ -8,8 +10,7 @@ private:
 	POINT	m_ptResolution; // 메인 윈도우 해상도
 	HDC		m_hdc;			// 메인 윈도우에 Draw 할 DC
 
-	HBITMAP m_hBit;
-	HDC		m_memDC;
+	CTexture* m_pMemTex;	// 백버퍼 텍스쳐
 
 	// 자주 사용하는 GDI Object
 	HBRUSH	m_arrBrush[(UINT)BRUSH_TYPE::END];

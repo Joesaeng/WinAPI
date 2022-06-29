@@ -37,6 +37,23 @@ CTexture* ResourceMgr::LoadTexture(const wstring& _strKey, const wstring& _strRe
 	return pTex;
 }
 
+CTexture* ResourceMgr::CreateTexture(const wstring& _strKey, UINT _iWidth, UINT _iHeight)
+{
+	CTexture* pTex = FindTexture(_strKey);
+	if (nullptr != pTex)
+	{
+		return pTex;
+	}
+
+	pTex = new CTexture;
+	pTex->Create(_iWidth, _iHeight);
+	pTex->SetKey(_strKey);
+
+	m_mapTex.insert(make_pair(_strKey, pTex));
+
+	return pTex;
+}
+
 CTexture* ResourceMgr::FindTexture(const wstring& _strKey)
 {
 	map<wstring, CRes*>::iterator iter = m_mapTex.find(_strKey);
