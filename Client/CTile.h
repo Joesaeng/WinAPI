@@ -17,6 +17,7 @@ public:
     }
 
     void AddImgIdx() { ++m_iImageIdx; }
+    void SetImgIdx(int _index) { m_iImageIdx = _index; }
 private:
 
     virtual void update();

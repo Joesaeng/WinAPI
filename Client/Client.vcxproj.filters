@@ -104,6 +104,9 @@
     <Filter Include="Engine\04 Object\UI\BtnUI">
       <UniqueIdentifier>{71d32538-9189-474c-8ffd-ab627adb3e6e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04 Object\UI\TitleUI">
+      <UniqueIdentifier>{c0f59a8b-ac91-4c75-a49a-ca63a5a27ae2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCore.h">
@@ -212,6 +215,9 @@
     <ClInclude Include="CBtnUI.h">
       <Filter>Engine\04 Object\UI\BtnUI</Filter>
     </ClInclude>
+    <ClInclude Include="CTitleUI.h">
+      <Filter>Engine\04 Object\UI\TitleUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCore.cpp">
@@ -301,6 +307,9 @@
     </ClCompile>
     <ClCompile Include="CBtnUI.cpp">
       <Filter>Engine\04 Object\UI\BtnUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CTitleUI.cpp">
+      <Filter>Engine\04 Object\UI\TitleUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

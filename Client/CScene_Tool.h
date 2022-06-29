@@ -7,7 +7,8 @@ class CScene_Tool :
     public CScene
 {
 private:
-    CUI* m_pUI;
+    CUI*    m_pUI;
+    UINT    m_index;
 
 public:
     virtual void update();
@@ -16,6 +17,8 @@ public:
 
 public:
     void SetTileIdx();
+
+    void SetTileNum(UINT _index) { m_index = _index; }
 
     void SaveTileData();
     void SaveTile(const wstring& _strFilePath);

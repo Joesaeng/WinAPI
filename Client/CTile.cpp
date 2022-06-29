@@ -39,15 +39,17 @@ void CTile::render(HDC _dc)
 	Vec2 vRenderPos = CCamera::GetInst()->GetRenderPos(GetPos());
 	Vec2 vScale = GetScale();
 
-	BitBlt(_dc
-		, (int)vRenderPos.x
-		, (int)vRenderPos.y
-		, (int)vScale.x
-		, (int)vScale.y
+	TransparentBlt(_dc
+		, (int)(vRenderPos.x)
+		, (int)(vRenderPos.y)
+		, (int)(vScale.x)
+		, (int)(vScale.y)
 		, m_pTileTex->GetDC()
-		, (int)iCurCol * TILE_SIZE
-		, (int)iCurRow * TILE_SIZE
-		, SRCCOPY);
+		, (int)(iCurCol * TILE_SIZE)
+		, (int)(iCurRow * TILE_SIZE)
+		, (int)(TILE_SIZE)
+		, (int)(TILE_SIZE)
+		, RGB(255, 0, 255));
 }
 
 void CTile::Save(FILE* _pFile)

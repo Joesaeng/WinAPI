@@ -90,7 +90,7 @@ void CScene::CreateTile(UINT _iXcount, UINT _iYcount)
 	m_iTileX = _iXcount;
 	m_iTileY = _iYcount;
 
-	CTexture* pTileTex = ResourceMgr::GetInst()->LoadTexture(L"Tile", L"texture\\tile\\tile.bmp");
+	CTexture* pTileTex = ResourceMgr::GetInst()->LoadTexture(L"Tile", L"texture\\tile\\mytile.bmp");
 	// 타일 생성
 	for (UINT i = 0; i < _iYcount; ++i)
 	{

@@ -23,7 +23,7 @@
 
 #define PI 3.1415926535f
 
-#define TILE_SIZE 48
+#define TILE_SIZE 64
 
 enum class GROUP_TYPE
 {

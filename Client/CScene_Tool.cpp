@@ -14,8 +14,10 @@
 #include "CUI.h"
 #include "CBtnUI.h"
 #include "CPanelUI.h"
+#include "CTitleUI.h"
 
 void changeScene(DWORD_PTR, DWORD_PTR);
+void SetIndex(DWORD_PTR, DWORD_PTR);
 
 CScene_Tool::CScene_Tool()
 	:m_pUI(nullptr)
@@ -34,20 +36,43 @@ void CScene_Tool::Enter()
 	Vec2 vResolution = CCore::GetInst()->GetResolution();
 
 	// UI 하나 생성
+	CUI* pTitleUI = new CTitleUI;
+	pTitleUI->SetName(L"TitleUI");
+	pTitleUI->SetScale(Vec2(300.f, 380.f));
+	pTitleUI->SetUIText(TEXT("타일 만들기"));
+	pTitleUI->SetPos(Vec2(vResolution.x - pTitleUI->GetScale().x, 0.f));
+
 	CUI* pPanelUI = new CPanelUI;
 	pPanelUI->SetName(L"PanelUI");
-	pPanelUI->SetScale(Vec2(300.f,150.f));
-	pPanelUI->SetPos(Vec2(vResolution.x - pPanelUI->GetScale().x, 0.f));
-
-	CBtnUI* pBtnUI = new CBtnUI;
-	pBtnUI->SetName(L"BtnUI");
-	pBtnUI->SetScale(Vec2(100.f, 50.f));
-	pBtnUI->SetPos(Vec2(0.f, 0.f));
-	//pBtnUI->SetClikedCallBack(changeScene,0,0);
+	pPanelUI->SetScale(Vec2(300.f,350.f));
+	pPanelUI->SetPos(Vec2(0, 30));
+	pTitleUI->AddChild(pPanelUI);
+	((CPanelUI*)pPanelUI)->CreateTileUI();
 	
-	pPanelUI->AddChild(pBtnUI);
+	
+	CBtnUI* pSaveBtnUI = new CBtnUI;
+	pSaveBtnUI->SetName(L"SaveBtnUI");
+	pSaveBtnUI->SetScale(Vec2(100.f, 30.f));
+	pSaveBtnUI->SetPos(Vec2(20.f, 300.f));
+	pSaveBtnUI->SetUIText(TEXT("SAVE"));
+	pSaveBtnUI->SetClikedCallBack(this, (SCENE_MEMFUNC)&CScene_Tool::SaveTileData);
+	pPanelUI->AddChild(pSaveBtnUI);
 
-	AddObject(pPanelUI, GROUP_TYPE::UI);
+	vector<CUI*> vecPanelChild = pPanelUI->GetChildUI();
+	for (size_t i = 0; i < vecPanelChild.size(); ++i)
+	{
+		int j = vecPanelChild[i]->GetIndex();
+		((CBtnUI*)vecPanelChild[i])->SetClikedCallBack(SetIndex,j,0);
+	}
+
+	CUI* pLoadBtnUI = pSaveBtnUI->Clone();
+	pLoadBtnUI->SetName(L"LoadBtnUI");
+	pLoadBtnUI->SetPos(Vec2(180.f, 300.f));
+	pLoadBtnUI->SetUIText(TEXT("LOAD"));
+	((CBtnUI*)pLoadBtnUI)->SetClikedCallBack(this, (SCENE_MEMFUNC)&CScene_Tool::LoadTileData);
+	pPanelUI->AddChild(pLoadBtnUI);
+
+	AddObject(pTitleUI, GROUP_TYPE::UI);
 
 	//// 복사본 UI
 	//CUI* pClonePanel = pPanelUI->Clone();
@@ -104,9 +129,10 @@ void CScene_Tool::SetTileIdx()
 		UINT iIdx = iRow * iTileX + iCol;
 
 		const vector<CObject*>& vecTile = GetGroupObject(GROUP_TYPE::TILE);
-		((CTile*)vecTile[iIdx])->AddImgIdx();
+		((CTile*)vecTile[iIdx])->SetImgIdx(m_index);
 	}
 }
+
 
 void CScene_Tool::SaveTileData()
 {
@@ -202,7 +228,11 @@ void changeScene(DWORD_PTR, DWORD_PTR)
 	ChangeScene(SCENE_TYPE::START);
 }
 
-
+void SetIndex(DWORD_PTR, DWORD_PTR)
+{
+	CScene* scene = SceneMgr::GetInst()->GetCurScene();
+	((CScene_Tool*)scene)->SetTileNum();
+}
 // ======================
 // Tile Count Window Proc
 // ======================

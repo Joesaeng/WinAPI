@@ -7,6 +7,7 @@
 #include "KeyMgr.h"
 
 UIMgr::UIMgr()
+	: m_pFocuseUI(nullptr)
 {
 
 }

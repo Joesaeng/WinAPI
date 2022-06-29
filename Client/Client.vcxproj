@@ -175,6 +175,7 @@
     <ClInclude Include="CSound.h" />
     <ClInclude Include="CTexture.h" />
     <ClInclude Include="CTile.h" />
+    <ClInclude Include="CTitleUI.h" />
     <ClInclude Include="CUI.h" />
     <ClInclude Include="EventMgr.h" />
     <ClInclude Include="func.h" />
@@ -212,6 +213,7 @@
     <ClCompile Include="CSound.cpp" />
     <ClCompile Include="CTexture.cpp" />
     <ClCompile Include="CTile.cpp" />
+    <ClCompile Include="CTitleUI.cpp" />
     <ClCompile Include="CUI.cpp" />
     <ClCompile Include="EventMgr.cpp" />
     <ClCompile Include="func.cpp" />

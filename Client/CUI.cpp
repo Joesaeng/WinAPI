@@ -3,6 +3,7 @@
 #include "CCamera.h"
 #include "KeyMgr.h"
 #include "CCore.h"
+#include "CTexture.h"
 
 #include "SelectGDI.h"
 
@@ -11,6 +12,9 @@ CUI::CUI(bool _bCamAff)
 	, m_bCamAffected(_bCamAff)
 	, m_bMouseOn(false)
 	, m_bLbtnDown(false)
+	, m_pUITex(nullptr)
+	, m_iImageIdx(0)
+	, m_wText(0)
 {
 }
 
@@ -20,6 +24,9 @@ CUI::CUI(const CUI& _origin)
 	 , m_bCamAffected(_origin.m_bCamAffected)
 	 , m_bMouseOn(false)
 	 , m_bLbtnDown(false)
+	 , m_pUITex(_origin.m_pUITex)
+	 , m_iImageIdx(_origin.m_iImageIdx)
+	 , m_wText(_origin.m_wText)
 {
 	for (size_t i = 0; i < _origin.m_vecChildUI.size(); ++i)
 	{
@@ -58,6 +65,36 @@ void CUI::render(HDC _dc)
 			, int(vPos.y + vScale.y));
 	}
 
+	if (m_pUITex)
+	{
+		if (nullptr == m_pUITex || -1 == m_iImageIdx)
+			return;
+
+		UINT iWidth = m_pUITex->Width();
+		UINT iHeight = m_pUITex->Height();
+
+		UINT iMaxCol = iWidth / TILE_SIZE;
+		UINT iMaxRow = iHeight / TILE_SIZE;
+
+		UINT iCurRow = (UINT)m_iImageIdx / iMaxCol;
+		UINT iCurCol = (UINT)m_iImageIdx % iMaxCol;
+
+		if (iMaxRow < iCurRow)
+			assert(nullptr && "이미지 범위를 벗어난 인덱스");
+
+		
+		TransparentBlt(_dc
+			, (int)(vPos.x)
+			, (int)(vPos.y)
+			, (int)(vScale.x)
+			, (int)(vScale.y)
+			, m_pUITex->GetDC()
+			, (int)(iCurCol * TILE_SIZE)
+			, (int)(iCurRow * TILE_SIZE)
+			, (int)(TILE_SIZE)
+			, (int)(TILE_SIZE)
+			, RGB(255, 0, 255));
+	}
 	render_Child(_dc);
 }
 
