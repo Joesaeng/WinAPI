@@ -17,10 +17,10 @@
 #include "CTitleUI.h"
 
 void changeScene(DWORD_PTR, DWORD_PTR);
-void SetIndex(DWORD_PTR, DWORD_PTR);
 
 CScene_Tool::CScene_Tool()
 	:m_pUI(nullptr)
+	, m_index(0)
 {
 }
 
@@ -49,7 +49,13 @@ void CScene_Tool::Enter()
 	pTitleUI->AddChild(pPanelUI);
 	((CPanelUI*)pPanelUI)->CreateTileUI();
 	
-	
+	vector<CUI*> vecPanelChild = pPanelUI->GetChildUI();
+	for (size_t i = 0; i < vecPanelChild.size(); ++i)
+	{
+		UINT j = vecPanelChild[i]->GetIndex();
+		((CBtnUI*)vecPanelChild[i])->SetClikedCallBack(this, (SCENE_MEMFUNC_UINT)&CScene_Tool::SetTileNum,j);
+	}
+
 	CBtnUI* pSaveBtnUI = new CBtnUI;
 	pSaveBtnUI->SetName(L"SaveBtnUI");
 	pSaveBtnUI->SetScale(Vec2(100.f, 30.f));
@@ -58,19 +64,20 @@ void CScene_Tool::Enter()
 	pSaveBtnUI->SetClikedCallBack(this, (SCENE_MEMFUNC)&CScene_Tool::SaveTileData);
 	pPanelUI->AddChild(pSaveBtnUI);
 
-	vector<CUI*> vecPanelChild = pPanelUI->GetChildUI();
-	for (size_t i = 0; i < vecPanelChild.size(); ++i)
-	{
-		int j = vecPanelChild[i]->GetIndex();
-		((CBtnUI*)vecPanelChild[i])->SetClikedCallBack(SetIndex,j,0);
-	}
-
 	CUI* pLoadBtnUI = pSaveBtnUI->Clone();
 	pLoadBtnUI->SetName(L"LoadBtnUI");
 	pLoadBtnUI->SetPos(Vec2(180.f, 300.f));
 	pLoadBtnUI->SetUIText(TEXT("LOAD"));
 	((CBtnUI*)pLoadBtnUI)->SetClikedCallBack(this, (SCENE_MEMFUNC)&CScene_Tool::LoadTileData);
 	pPanelUI->AddChild(pLoadBtnUI);
+
+	CBtnUI* pSetAllTileBtnUI = new CBtnUI;
+	pSetAllTileBtnUI->SetName(L"SetAllTileBtnUI");
+	pSetAllTileBtnUI->SetScale(Vec2(200.f, 30.f));
+	pSetAllTileBtnUI->SetPos(Vec2(50.f, 260.f));
+	pSetAllTileBtnUI->SetUIText(TEXT("SETALL"));
+	pSetAllTileBtnUI->SetClikedCallBack(this, (SCENE_MEMFUNC)&CScene_Tool::SetAllTile);
+	pPanelUI->AddChild(pSetAllTileBtnUI);
 
 	AddObject(pTitleUI, GROUP_TYPE::UI);
 
@@ -133,6 +140,16 @@ void CScene_Tool::SetTileIdx()
 	}
 }
 
+
+void CScene_Tool::SetAllTile()
+{
+	const vector<CObject*>& vecTile = GetGroupObject(GROUP_TYPE::TILE);
+	for (size_t i = 0; i < vecTile.size(); ++i)
+	{
+		((CTile*)vecTile[i])->SetImgIdx(m_index);
+	}
+	
+}
 
 void CScene_Tool::SaveTileData()
 {
@@ -228,11 +245,7 @@ void changeScene(DWORD_PTR, DWORD_PTR)
 	ChangeScene(SCENE_TYPE::START);
 }
 
-void SetIndex(DWORD_PTR, DWORD_PTR)
-{
-	CScene* scene = SceneMgr::GetInst()->GetCurScene();
-	((CScene_Tool*)scene)->SetTileNum();
-}
+
 // ======================
 // Tile Count Window Proc
 // ======================

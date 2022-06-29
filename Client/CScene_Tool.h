@@ -16,10 +16,10 @@ public:
     virtual void Exit();
 
 public:
+    void SetTileNum(UINT _index) { m_index = _index; }
     void SetTileIdx();
 
-    void SetTileNum(UINT _index) { m_index = _index; }
-
+    void SetAllTile();
     void SaveTileData();
     void SaveTile(const wstring& _strFilePath);
 

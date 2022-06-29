@@ -6,7 +6,7 @@
 typedef void(*BTN_FUNC) (DWORD_PTR, DWORD_PTR);
 
 typedef void(CScene::*SCENE_MEMFUNC)(void);
-
+typedef void(CScene::*SCENE_MEMFUNC_UINT)(UINT);
 typedef void(CObject::*OBJECT_MEMFUNC)(void);
 
 class CTexture;
@@ -21,6 +21,10 @@ private:
 
     SCENE_MEMFUNC   m_pSceneFunc;
     CScene*         m_pSceneInst;
+
+    SCENE_MEMFUNC_UINT m_pSceneFuncUint;
+    UINT                m_iIndex;
+    
     
 
 public:
@@ -45,7 +49,12 @@ public:
         m_pSceneInst = _pScene;
         m_pSceneFunc = _pSceneFunc;
     }
-   
+    void SetClikedCallBack(CScene* _pScene, SCENE_MEMFUNC_UINT _pSceneFunc, UINT _index)
+    {
+        m_pSceneInst = _pScene;
+        m_pSceneFuncUint = _pSceneFunc;
+        m_iIndex = _index;
+    }
  
     CLONE(CBtnUI);
 public:

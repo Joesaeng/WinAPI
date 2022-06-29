@@ -9,7 +9,7 @@ CBtnUI::CBtnUI()
 	, m_param2(0)
 	, m_pSceneFunc(nullptr)
 	, m_pSceneInst(nullptr)
-	, m_index(-1)
+	, m_iIndex(0)
 {
 }
 
@@ -49,6 +49,10 @@ void CBtnUI::MouseLBtnClicked()
 	if (m_pSceneFunc && m_pSceneInst)
 	{
 		(m_pSceneInst->*m_pSceneFunc)();
+	}
+	if (m_pSceneFuncUint && m_pSceneInst)
+	{
+		(m_pSceneInst->*m_pSceneFuncUint)(m_iIndex);
 	}
 	
 }
