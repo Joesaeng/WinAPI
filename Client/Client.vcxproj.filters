@@ -107,6 +107,24 @@
     <Filter Include="Engine\04 Object\UI\TitleUI">
       <UniqueIdentifier>{c0f59a8b-ac91-4c75-a49a-ca63a5a27ae2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\08 Module\AI">
+      <UniqueIdentifier>{bf9b42b6-3bc4-42de-ab47-b3205a80255d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\08 Module\AI\State">
+      <UniqueIdentifier>{03531760-ec5e-4017-9f05-b1aaf7bc7dee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\08 Module\AI\State\Attack">
+      <UniqueIdentifier>{ad0c3933-ce55-4419-abc4-6c74f99c5855}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\08 Module\AI\State\Trace">
+      <UniqueIdentifier>{78265a57-55a6-4ace-8387-82965bad5ccf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\08 Module\AI\State\Dead">
+      <UniqueIdentifier>{62ea4fa3-5d32-4cc1-8100-2e4821f9c1f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\08 Module\AI\State\Idle">
+      <UniqueIdentifier>{d78259e6-5b45-4e83-b67b-28064bcf6a1f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCore.h">
@@ -218,6 +236,15 @@
     <ClInclude Include="CTitleUI.h">
       <Filter>Engine\04 Object\UI\TitleUI</Filter>
     </ClInclude>
+    <ClInclude Include="AI.h">
+      <Filter>Engine\08 Module\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="CState.h">
+      <Filter>Engine\08 Module\AI\State</Filter>
+    </ClInclude>
+    <ClInclude Include="CIdleState.h">
+      <Filter>Engine\08 Module\AI\State\Idle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCore.cpp">
@@ -310,6 +337,15 @@
     </ClCompile>
     <ClCompile Include="CTitleUI.cpp">
       <Filter>Engine\04 Object\UI\TitleUI</Filter>
+    </ClCompile>
+    <ClCompile Include="AI.cpp">
+      <Filter>Engine\08 Module\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="CState.cpp">
+      <Filter>Engine\08 Module\AI\State</Filter>
+    </ClCompile>
+    <ClCompile Include="CIdleState.cpp">
+      <Filter>Engine\08 Module\AI\State\Idle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

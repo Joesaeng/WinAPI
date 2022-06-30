@@ -6,6 +6,7 @@
 
 #include "CCollider.h"
 #include "CAnimator.h"
+#include "CCamera.h"
 
 CObject::CObject()
 	: m_strName{}

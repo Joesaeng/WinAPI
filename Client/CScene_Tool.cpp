@@ -15,6 +15,7 @@
 #include "CBtnUI.h"
 #include "CPanelUI.h"
 #include "CTitleUI.h"
+#include "CCamera.h"
 
 void changeScene(DWORD_PTR, DWORD_PTR);
 

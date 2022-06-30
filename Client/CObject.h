@@ -1,7 +1,5 @@
 #pragma once
 
-#include "pch.h"
-#include "CCamera.h"
 
 
 class CCollider;

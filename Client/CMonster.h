@@ -1,22 +1,22 @@
 #pragma once
 #include "CObject.h"
+
+class AI;
+
 class CMonster :
     public CObject
 {
 private:
-    Vec2        m_vCenterPos;
     float       m_fSpeed;
-    float       m_fMaxDistance;
-    int         m_iDir; // 1, -1
     UINT        m_iHP;
 
+    AI*         m_AI;
 
 public:
     void SetSpeed(float _Speed) { m_fSpeed = _Speed; }
     float GetSpeed() { return m_fSpeed; }
-    void SetMoveDistance(float _Distance) { m_fMaxDistance = _Distance; }
-    void SetCenterPos(Vec2 _vPos) { m_vCenterPos = _vPos; }
-    Vec2 GetCenterPos() { return m_vCenterPos; }
+
+    void SetAI(AI* _pAI) { m_AI = _pAI; }
 
 private:
     void MonsterFire();
