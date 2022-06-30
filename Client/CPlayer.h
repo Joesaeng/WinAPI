@@ -6,6 +6,7 @@ class CPlayer :
     public CObject
 {
 private:
+    Vec2    m_dir;
 
 public:
     virtual void update();

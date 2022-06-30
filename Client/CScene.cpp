@@ -7,6 +7,7 @@
 #include "ResourceMgr.h"
 #include "PathMgr.h"
 
+#include "CCamera.h"
 
 CScene::CScene()
 	:m_iTileX(0)
@@ -53,6 +54,12 @@ void CScene::render(HDC _dc)
 {
 	for (UINT i = 0; i < (UINT)GROUP_TYPE::END; ++i)
 	{
+		if ((UINT)GROUP_TYPE::TILE == i)
+		{
+			render_tile(_dc);
+			continue;
+		}
+
 		vector<CObject*>::iterator iter = m_arrObj[i].begin();
 		for (; iter < m_arrObj[i].end();)
 		{
@@ -65,6 +72,37 @@ void CScene::render(HDC _dc)
 			{
 				iter = m_arrObj[i].erase(iter);
 			}
+		}
+	}
+}
+
+void CScene::render_tile(HDC _dc)
+{
+	const vector<CObject*> vecTile = GetGroupObject(GROUP_TYPE::TILE);
+
+	Vec2 vCamLook = CCamera::GetInst()->GetLookAt();
+	Vec2 vResolution = CCore::GetInst()->GetResolution();
+	Vec2 vLeftTop = vCamLook - vResolution / 2.f;
+
+	int iTileSize = TILE_SIZE;
+
+	int iLTCol = (int)vLeftTop.x / iTileSize; // 현재 카메라가 보고있는 화면의 좌상단 좌표의 타일 열 값
+	int iLTRow = (int)vLeftTop.y / iTileSize; //											  행 값
+	int iLTIdx = (m_iTileX * iLTRow) + iLTCol; // 좌상단 타일 인덱스값
+
+	int iClientWidth = ((int)vResolution.x / iTileSize) + 1;
+	int iClientHeight = ((int)vResolution.y / iTileSize) + 1;
+
+	for (int iCurRow = iLTRow; iCurRow < (iLTRow + iClientHeight); ++iCurRow) // 좌상단 열 로 부터 좌하단 열까지 반복문
+	{
+		for (int iCurCol = iLTCol; iCurCol < (iLTCol + iClientWidth); ++iCurCol)
+		{
+			if (0 > iCurCol || (int)m_iTileX <= iCurCol || 0 > iCurRow || (int)m_iTileY <= iCurRow)
+				continue;
+
+			int iIdx = (m_iTileX * iCurRow) + iCurCol;
+
+			vecTile[iIdx]->render(_dc);
 		}
 	}
 }

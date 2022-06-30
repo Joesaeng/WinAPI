@@ -52,8 +52,9 @@ enum class KEY
 	RBTN,
 
 
-	LAST,
+	LAST
 }; // 키값 부여
+
 
 struct tKeyInfo
 {

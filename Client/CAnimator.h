@@ -26,6 +26,7 @@ public:
 	void finalupdate();
 	void render(HDC _dc);
 
+	CAnimation* CurAnimaion() { return m_pCurAnim; }
 public:
 	CAnimator();
 	~CAnimator();
