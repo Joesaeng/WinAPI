@@ -7,6 +7,7 @@ class CPlayer :
 {
 private:
     Vec2    m_dir;
+    float   m_moveSpeed;
 
 public:
     virtual void update();
@@ -14,6 +15,7 @@ public:
 
 private:
     void CreateMissile();
+    void MovePlayer();
 
     CLONE(CPlayer)
 public:

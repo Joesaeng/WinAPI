@@ -15,6 +15,7 @@
 #include "CCamera.h"
 #include "AI.h"
 #include "CIdleState.h"
+#include "CTraceState.h"
 
 
 CScene_Start::CScene_Start()
@@ -48,6 +49,12 @@ void CScene_Start::Enter()
 	pObj->SetScale(Vec2(100.f,100.f));
 	AddObject(pObj, GROUP_TYPE::PLAYER);
 
+	RegisterPlayer(pObj);
+
+	CCamera::GetInst()->SetTarget(pObj);
+
+	Vec2 vResolution = CCore::GetInst()->GetResolution();
+
 	//CObject* pOtherPlayer = pObj->Clone();
 	//pOtherPlayer->SetPos(Vec2(580.f, 584.f));
 	//AddObject(pOtherPlayer, GROUP_TYPE::PLAYER);
@@ -55,25 +62,15 @@ void CScene_Start::Enter()
 	//CCamera::GetInst()->SetTarget(pObj);
 
 	// 몬스터 배치
-	int iMonCount = 1;
-	float fObjScale = 50.f;
-
-	Vec2 vResolution = CCore::GetInst()->GetResolution();
-
-	AI* pAI = new AI;
-	pAI->AddState(new CIdleState);
-
-	CMonster* pMonsterObj = nullptr;
-	for (int i = 0; i < iMonCount; ++i)
+	for (int i = 0; i < 10; ++i)
 	{
-		pMonsterObj = new CMonster;
-		pMonsterObj->SetName(L"Monster");
-		pMonsterObj->SetScale(Vec2(fObjScale, fObjScale));
-		pMonsterObj->SetPos(vResolution / 2.f - Vec2(0.f, 300.f));
-		pMonsterObj->SetAI(pAI);
-
-		AddObject(pMonsterObj, GROUP_TYPE::MONSTER);
+		Vec2 vPos = Vec2(100.f, 100.f);
+		CMonster* pMon = CMonFactory::CreateMonster(MON_TYPE::NORMAL, vPos);
+		AddObject(pMon, GROUP_TYPE::MONSTER);
 	}
+	//CMonster* pMon = CMonFactory::CreateMonster(MON_TYPE::NORMAL, Vec2(640.f, 100.f));
+	//
+	//AddObject(pMon, GROUP_TYPE::MONSTER);
 
 	// 타일 로딩
 	//LoadTile(L"tile\\StartTile.tile");

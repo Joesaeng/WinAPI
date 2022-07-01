@@ -11,9 +11,8 @@
 
 
 CMonster::CMonster()
-	: m_fSpeed(100.f)
-	, m_iHP(15)
-	, m_AI(nullptr)
+	: m_tInfo{}
+	,m_AI(nullptr)
 {
 	CreateCollider();
 	GetCollider()->SetScale(Vec2(40.f, 40.f));
@@ -38,9 +37,15 @@ void CMonster::OnCollisionEnter(CCollider* _pOther)
 	if (pOtherObj->GetName() == L"Missile_Player")
 	{
 		isHit(_pOther->GetObj());
-		if(0 >= m_iHP)
+		if (0.f >= m_tInfo.fHP)
 			DeleteObject(this);
 	}
+}
+
+void CMonster::SetAI(AI* _pAI)
+{
+	m_AI = _pAI;
+	m_AI->m_pOwner = this;
 }
 
 void CMonster::MonsterFire()
@@ -61,6 +66,12 @@ void CMonster::isHit(CObject* _pHit)
 {
 	//CMissile* pMissile = dynamic_cast<CMissile*>(_pHit);
 	//dmg = pMissile->GetDmg();
-	UINT dmg = ((CMissile*)_pHit)->GetDmg();
-	m_iHP -= dmg;
+	Vec2 vMissilePos = _pHit->GetPos();
+	Vec2 vDir = GetPos() - vMissilePos;
+	vDir.Normalize();
+
+	SetPos(GetPos() + vDir * 10.f);
+
+	float dmg = ((CMissile*)_pHit)->GetDmg();
+	m_tInfo.fHP -= dmg;
 }

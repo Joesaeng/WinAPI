@@ -31,6 +31,8 @@ CScene_Tool::~CScene_Tool()
 
 void CScene_Tool::Enter()
 {
+	CCore::GetInst()->DockMenu();
+
 	// 타일 생성
 	CreateTile(5,5);
 
@@ -98,6 +100,7 @@ void CScene_Tool::Enter()
 
 void CScene_Tool::Exit()
 {
+	CCore::GetInst()->DivideMenu();
 	DeleteAll();
 }
 
@@ -106,8 +109,6 @@ void CScene_Tool::update()
 	CScene::update();
 
 	SetTileIdx();
-
-	
 }
 
 void CScene_Tool::SetTileIdx()

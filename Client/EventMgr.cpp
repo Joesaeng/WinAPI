@@ -5,6 +5,9 @@
 #include "SceneMgr.h"
 #include "CScene.h"
 
+#include "AI.h"
+#include "CState.h"
+
 #include "UIMgr.h"
 
 EventMgr::EventMgr()
@@ -58,6 +61,8 @@ void EventMgr::Excute(const tEvent& _eve)
 		// Object 를 Dead 상태로 변경
 		// 삭제예정 오브젝트들을 모아둔다.
 		CObject* pDeadObj = (CObject*)_eve.lParam;
+		if (pDeadObj->IsDead())
+			return;
 		pDeadObj->SetDead();
 		m_vecDead.push_back(pDeadObj);
 	}
@@ -69,6 +74,14 @@ void EventMgr::Excute(const tEvent& _eve)
 
 		// 포커스 UI 해제
 		UIMgr::GetInst()->SetFocusedUI(nullptr);
+	}
+	case EVENT_TYPE::AI_STATE_CHANGE:
+	{
+		// lParam : AI 포인터 
+		AI* pAI = (AI*)_eve.lParam;
+		// wParam : Next State
+		MON_STATE eNextState = (MON_STATE)_eve.wParam;
+		pAI->ChangeState(eNextState);
 	}
 		break;
 	}

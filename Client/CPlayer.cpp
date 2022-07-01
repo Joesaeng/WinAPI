@@ -14,7 +14,13 @@
 #include "CAnimator.h"
 #include "CAnimation.h"
 
+static float hAxis;
+static float vAxis;
+static Vec2 prevDir;
+static float atkDelay = 0.f;
+
 CPlayer::CPlayer()
+	: m_moveSpeed(200.f)
 {
 	// Texture ·Îµù
 	// m_pTex = ResourceMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Run.bmp");
@@ -61,6 +67,9 @@ CPlayer::CPlayer()
 	GetAnimator()->FindAnimation(L"IDLE_DOWN")->GetFrame(0).vOffset = Vec2(0.f, -20.f);
 	GetAnimator()->FindAnimation(L"IDLE_LEFT")->GetFrame(0).vOffset = Vec2(0.f, -20.f);
 	GetAnimator()->FindAnimation(L"IDLE_RIGHT")->GetFrame(0).vOffset = Vec2(0.f, -20.f);
+
+	m_dir = Vec2(0.f, 1.f);
+	prevDir = m_dir;
 }
 
 CPlayer::~CPlayer()
@@ -70,74 +79,14 @@ CPlayer::~CPlayer()
 
 void CPlayer::update()
 {
-	Vec2 vPos = GetPos();
-	if (KEY_TAP(KEY::W))
-	{
-		m_dir.y = -1.f;
-	}
-	if (KEY_TAP(KEY::S))
-	{
-		m_dir.y = 1.f;
-	}
-	if (KEY_TAP(KEY::A))
-	{
-		m_dir.x = -1.f;
-	}
-	if (KEY_TAP(KEY::D))
-	{
-		m_dir.x = 1.f;
-	}
-	if (KEY_HOLD(KEY::W))
-	{
-		m_dir.y = -1.f;
-		vPos.y -= 200.f * fDeltaTime;
-		GetAnimator()->Play(L"WALK_UP",true);
-	}
-	if (KEY_HOLD(KEY::S))
-	{
-		m_dir.y = 1.f;
-		vPos.y += 200.f * fDeltaTime;
-		GetAnimator()->Play(L"WALK_DOWN", true);
-	}
-	if (KEY_HOLD(KEY::A))
-	{
-		m_dir.x = -1.f;
-		vPos.x -= 200.f * fDeltaTime;
-		GetAnimator()->Play(L"WALK_LEFT", true);
-	}
-	if (KEY_HOLD(KEY::D))
-	{
-		m_dir.x = 1.f;
-		vPos.x += 200.f * fDeltaTime;
-		GetAnimator()->Play(L"WALK_RIGHT", true);
-	}
-	if (KEY_TAP(KEY::SPACE))
-	{
-		CreateMissile();
-	}
-	if (KEY_AWAY(KEY::W))
-	{
-		m_dir = Vec2(0.f, -1.f);
-		GetAnimator()->Play(L"IDLE_UP", true);
-	}
-	if (KEY_AWAY(KEY::S))
-	{
-		m_dir = Vec2(0.f, 1.f);
-		GetAnimator()->Play(L"IDLE_DOWN", true);
-	}
-	if (KEY_AWAY(KEY::A))
-	{
-		m_dir = Vec2(-1.f, 0.f);
-		GetAnimator()->Play(L"IDLE_LEFT", true);
-	}
-	if (KEY_AWAY(KEY::D))
-	{
-		m_dir = Vec2(1.f, 0.f);
-		GetAnimator()->Play(L"IDLE_RIGHT", true);
-	}
+	if (0.21f >= atkDelay)
+		atkDelay += fDeltaTime;
 	
+	MovePlayer();
+	
+
 	GetAnimator()->update();
-	SetPos(vPos);
+	
 }
 
 void CPlayer::render(HDC _dc)
@@ -169,6 +118,9 @@ void CPlayer::render(HDC _dc)
 
 void CPlayer::CreateMissile()
 {
+	if (0.2f >= atkDelay)
+		return;
+	
 	Vec2 vMissilePos = GetPos();
 	vMissilePos.y -= (GetScale().y / 2.f) - 20.f;
 
@@ -176,11 +128,76 @@ void CPlayer::CreateMissile()
 	pMissile->SetPos(vMissilePos);
 	pMissile->SetName(L"Missile_Player");
 	pMissile->SetScale(Vec2(25.f, 25.f));
-	pMissile->SetDir(Vec2(m_dir.x,m_dir.y));
+	pMissile->SetDir(Vec2(m_dir.x, m_dir.y));
 	pMissile->SetDmg(5);
 
 	CreateObject(pMissile, GROUP_TYPE::PROJ_PLAYER);
+	atkDelay = 0.f;
+	
 
+}
+
+void CPlayer::MovePlayer()
+{
+	Vec2 vPos = GetPos();
+
+
+	if (KEY_HOLD(KEY::W))
+	{
+		hAxis = -1.f;
+		GetAnimator()->Play(L"WALK_UP", true);
+	}
+	if (KEY_HOLD(KEY::S))
+	{
+		hAxis = 1.f;
+		GetAnimator()->Play(L"WALK_DOWN", true);
+	}
+	if (KEY_HOLD(KEY::A))
+	{
+		vAxis = -1.f;
+		GetAnimator()->Play(L"WALK_LEFT", true);
+	}
+	if (KEY_HOLD(KEY::D))
+	{
+		vAxis = 1.f;
+		GetAnimator()->Play(L"WALK_RIGHT", true);
+	}
+	if (KEY_HOLD(KEY::SPACE))
+	{
+		CreateMissile();
+	}
+	if (KEY_AWAY(KEY::W))
+	{
+		hAxis = 0.f;
+		GetAnimator()->Play(L"IDLE_UP", true);
+	}
+	if (KEY_AWAY(KEY::S))
+	{
+		hAxis = 0.f;
+		GetAnimator()->Play(L"IDLE_DOWN", true);
+	}
+	if (KEY_AWAY(KEY::A))
+	{
+		vAxis = 0.f;
+		GetAnimator()->Play(L"IDLE_LEFT", true);
+	}
+	if (KEY_AWAY(KEY::D))
+	{
+		vAxis = 0.f;
+		GetAnimator()->Play(L"IDLE_RIGHT", true);
+	}
+
+	if (m_dir != Vec2(0.f, 0.f))
+	{
+		if (vAxis != 0.f || hAxis != 0.f)
+			m_dir = Vec2(vAxis, hAxis);
+		prevDir = m_dir;
+	}
+	else
+		m_dir = prevDir;
+
+	vPos += Vec2(vAxis, hAxis) * fDeltaTime * m_moveSpeed;
+	SetPos(vPos);
 }
 
 

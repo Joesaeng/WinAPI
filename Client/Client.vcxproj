@@ -165,6 +165,7 @@
     <ClInclude Include="CIdleState.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="CMissile.h" />
+    <ClInclude Include="CMonFactory.h" />
     <ClInclude Include="CMonster.h" />
     <ClInclude Include="CObject.h" />
     <ClInclude Include="CollisionMgr.h" />
@@ -179,6 +180,7 @@
     <ClInclude Include="CTexture.h" />
     <ClInclude Include="CTile.h" />
     <ClInclude Include="CTitleUI.h" />
+    <ClInclude Include="CTraceState.h" />
     <ClInclude Include="CUI.h" />
     <ClInclude Include="EventMgr.h" />
     <ClInclude Include="func.h" />
@@ -206,6 +208,7 @@
     <ClCompile Include="CCore.cpp" />
     <ClCompile Include="CIdleState.cpp" />
     <ClCompile Include="CMissile.cpp" />
+    <ClCompile Include="CMonFactory.cpp" />
     <ClCompile Include="CMonster.cpp" />
     <ClCompile Include="CObject.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />
@@ -220,6 +223,7 @@
     <ClCompile Include="CTexture.cpp" />
     <ClCompile Include="CTile.cpp" />
     <ClCompile Include="CTitleUI.cpp" />
+    <ClCompile Include="CTraceState.cpp" />
     <ClCompile Include="CUI.cpp" />
     <ClCompile Include="EventMgr.cpp" />
     <ClCompile Include="func.cpp" />

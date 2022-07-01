@@ -1,5 +1,7 @@
 #pragma once
 
+#include "CMonFactory.h"
+
 // 전방선언
 class CObject;
 
@@ -12,6 +14,8 @@ private:
 	UINT				m_iTileX; // 타일 가로 개수
 	UINT				m_iTileY; // 타일 세로 개수
 
+	CObject*			m_pPlayer; // Player
+
 public:
 	void SetName(const wstring& _strName) { m_strName = _strName; }
 	const wstring& GetName() { return m_strName; }
@@ -19,7 +23,7 @@ public:
 	UINT GetTileX() { return m_iTileX; }
 	UINT GetTileY() { return m_iTileY; }
 
-
+	CObject* GetPlayer() { return m_pPlayer; }
 
 	virtual void update();
 	virtual void finalUpdate();
@@ -33,6 +37,7 @@ public:
 
 public:
 	void AddObject(CObject* _pObj, GROUP_TYPE _eType){m_arrObj[(UINT)_eType].push_back(_pObj);}
+	void RegisterPlayer(CObject* _pPlayer) { m_pPlayer = _pPlayer; }
 
 	const vector<CObject*>& GetGroupObject(GROUP_TYPE _eType) { return m_arrObj[(UINT)_eType]; }
 

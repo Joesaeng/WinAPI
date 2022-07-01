@@ -10,7 +10,7 @@ private:
 
     Vec2      m_vDir;
     float     m_deadCount;
-    UINT      m_iDmg;
+    float     m_iDmg;
 
 
 public:
@@ -20,8 +20,8 @@ public:
         m_vDir = _vDir;
         m_vDir.Normalize();
     }
-    void SetDmg(UINT _dmg) { m_iDmg = _dmg; }
-    UINT GetDmg() { return m_iDmg; }
+    void SetDmg(float _dmg) { m_iDmg = _dmg; }
+    float GetDmg() { return m_iDmg; }
 
 
 public:
