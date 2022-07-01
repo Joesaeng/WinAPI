@@ -62,15 +62,10 @@ void CScene_Start::Enter()
 	//CCamera::GetInst()->SetTarget(pObj);
 
 	// 몬스터 배치
-	for (int i = 0; i < 10; ++i)
-	{
-		Vec2 vPos = Vec2(100.f, 100.f);
-		CMonster* pMon = CMonFactory::CreateMonster(MON_TYPE::NORMAL, vPos);
-		AddObject(pMon, GROUP_TYPE::MONSTER);
-	}
-	//CMonster* pMon = CMonFactory::CreateMonster(MON_TYPE::NORMAL, Vec2(640.f, 100.f));
-	//
-	//AddObject(pMon, GROUP_TYPE::MONSTER);
+	
+	CMonster* pMon = CMonFactory::CreateMonster(MON_TYPE::NORMAL, Vec2(640.f, 100.f));
+	
+	AddObject(pMon, GROUP_TYPE::MONSTER);
 
 	// 타일 로딩
 	//LoadTile(L"tile\\StartTile.tile");

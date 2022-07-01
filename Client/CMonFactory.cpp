@@ -1,10 +1,12 @@
 #include "pch.h"
 #include "CMonFactory.h"
 #include "CMonster.h"
+#include "CCollider.h"
 #include "AI.h"
 
 #include "CIdleState.h"
 #include "CTraceState.h"
+
 
 CMonster* CMonFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos)
 {
@@ -17,13 +19,15 @@ CMonster* CMonFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos)
 		pMon = new CMonster;
 		pMon->SetPos(_vPos);
 		pMon->SetName(L"NORMAL");
-		pMon->SetScale(Vec2(30.f, 30.f));
+		pMon->SetScale(Vec2(100.f, 100.f));
+		pMon->CreateCollider();
+		pMon->GetCollider()->SetScale(Vec2(105.f, 105.f));
 
 		tMonInfo info = {};
 		info.fDamage = 10.f;
 		info.fAtkRange = 50.f;
-		info.fRecogRange = 600.f;
-		info.fHP = 20.f;
+		info.fRecogRange = 300.f;
+		info.fHP = 50.f;
 		info.fSpeed = 80.f;
 
 		pMon->SetMonInfo(info);

@@ -131,6 +131,9 @@
     <Filter Include="Engine\09 Factory\MonFactory">
       <UniqueIdentifier>{7372aa80-3a20-4945-b6f5-331b7d25f838}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\07 Component\RigidBody">
+      <UniqueIdentifier>{33b94b34-68b1-4701-b92f-e7ba884baa46}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCore.h">
@@ -257,6 +260,9 @@
     <ClInclude Include="CMonFactory.h">
       <Filter>Engine\09 Factory\MonFactory</Filter>
     </ClInclude>
+    <ClInclude Include="CRigidBody.h">
+      <Filter>Engine\07 Component\RigidBody</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCore.cpp">
@@ -364,6 +370,9 @@
     </ClCompile>
     <ClCompile Include="CMonFactory.cpp">
       <Filter>Engine\09 Factory\MonFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="CRigidBody.cpp">
+      <Filter>Engine\07 Component\RigidBody</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

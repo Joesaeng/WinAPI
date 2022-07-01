@@ -23,8 +23,11 @@ void CTraceState::update()
 	Vec2 vPlayerPos = pPlayer->GetPos();
 
 	Vec2 vMonPos = GetMonster()->GetPos();
-
 	Vec2 vMonDir = vPlayerPos - vMonPos;
+
+	if (Vec2(0.f, 0.f) == vMonDir)
+		return;
+
 	vMonDir.Normalize();
 
 	vMonPos += vMonDir * GetMonster()->GetMonsterInfo().fSpeed * fDeltaTime;

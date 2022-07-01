@@ -4,6 +4,8 @@
 
 class CCollider;
 class CAnimator;
+class CRigidBody;
+
 
 class CObject
 {
@@ -16,6 +18,7 @@ private:
 	// Component
 	CCollider*	m_pCollider;
 	CAnimator*  m_pAnimator;
+	CRigidBody* m_pRigidBody;
 
 	bool		m_bAlive; // 오브젝트의 생존
 
@@ -31,11 +34,13 @@ public:
 
 	CCollider* GetCollider() { return m_pCollider; }
 	CAnimator* GetAnimator() { return m_pAnimator; }
+	CRigidBody* GetRigidBody() { return m_pRigidBody; }
 
 	bool IsDead() { return !m_bAlive; }
 
 	void CreateCollider();
 	void CreateAnimator();
+	void CreateRigidBody();
 
 	virtual void OnCollision(CCollider* _pOther) {}			// 충돌 중인 경우 호출되는 함수
 	virtual void OnCollisionEnter(CCollider* _pOther) {}	// 이번에 충돌한 경우 호출되는 함수

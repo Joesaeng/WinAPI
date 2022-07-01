@@ -29,6 +29,7 @@ CPlayer::CPlayer()
 	GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
 	GetCollider()->SetScale(Vec2(32.f, 32.f));
 
+	CreateRigidBody();
 
 	// Texture 로딩
 	CTexture* pTex = ResourceMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\charAnim.bmp");
@@ -92,28 +93,6 @@ void CPlayer::update()
 void CPlayer::render(HDC _dc)
 {
 	component_render(_dc); // 컴포넌트(충돌체, etc ...)가 있는 경우 렌더
-	/*CTexture* pTex = ResourceMgr::GetInst()->LoadTexture(L"PlayerTextex", L"texture\\charAnim.bmp");
-
-	Vec2 vPos = GetPos();
-	vPos = CCamera::GetInst()->GetRenderPos(vPos);
-
-	float width = (float)pTex->Width();
-	float height = (float)pTex->Height();
-	
-	BLENDFUNCTION bf = {};
-	bf.BlendOp = AC_SRC_OVER;
-	bf.BlendFlags = 0;
-	bf.AlphaFormat = 0;
-	bf.SourceConstantAlpha = 127;
-
-	AlphaBlend(_dc
-		, int(vPos.x - width / 2.f)
-		, int(vPos.y - height / 2.f)
-		, (int)width, (int)height
-		, pTex->GetDC()
-		, 0, 0
-		, (int)width, (int)height
-		, bf);*/
 }
 
 void CPlayer::CreateMissile()
@@ -139,65 +118,72 @@ void CPlayer::CreateMissile()
 
 void CPlayer::MovePlayer()
 {
-	Vec2 vPos = GetPos();
+	CRigidBody* pRigid = GetRigidBody();
 
-
-	if (KEY_HOLD(KEY::W))
-	{
-		hAxis = -1.f;
-		GetAnimator()->Play(L"WALK_UP", true);
-	}
-	if (KEY_HOLD(KEY::S))
-	{
-		hAxis = 1.f;
-		GetAnimator()->Play(L"WALK_DOWN", true);
-	}
-	if (KEY_HOLD(KEY::A))
-	{
-		vAxis = -1.f;
-		GetAnimator()->Play(L"WALK_LEFT", true);
-	}
-	if (KEY_HOLD(KEY::D))
-	{
-		vAxis = 1.f;
-		GetAnimator()->Play(L"WALK_RIGHT", true);
-	}
-	if (KEY_HOLD(KEY::SPACE))
-	{
-		CreateMissile();
-	}
-	if (KEY_AWAY(KEY::W))
-	{
-		hAxis = 0.f;
-		GetAnimator()->Play(L"IDLE_UP", true);
-	}
-	if (KEY_AWAY(KEY::S))
-	{
-		hAxis = 0.f;
-		GetAnimator()->Play(L"IDLE_DOWN", true);
-	}
-	if (KEY_AWAY(KEY::A))
-	{
-		vAxis = 0.f;
-		GetAnimator()->Play(L"IDLE_LEFT", true);
-	}
-	if (KEY_AWAY(KEY::D))
-	{
-		vAxis = 0.f;
-		GetAnimator()->Play(L"IDLE_RIGHT", true);
-	}
-
-	if (m_dir != Vec2(0.f, 0.f))
-	{
-		if (vAxis != 0.f || hAxis != 0.f)
-			m_dir = Vec2(vAxis, hAxis);
-		prevDir = m_dir;
-	}
-	else
-		m_dir = prevDir;
-
-	vPos += Vec2(vAxis, hAxis) * fDeltaTime * m_moveSpeed;
-	SetPos(vPos);
+	pRigid->AddForce();
 }
+
+//void CPlayer::MovePlayer() // 플레이어 이동(키입력 방식)
+//{
+//	Vec2 vPos = GetPos();
+//
+//
+//	if (KEY_HOLD(KEY::W))
+//	{
+//		hAxis = -1.f;
+//		GetAnimator()->Play(L"WALK_UP", true);
+//	}
+//	if (KEY_HOLD(KEY::S))
+//	{
+//		hAxis = 1.f;
+//		GetAnimator()->Play(L"WALK_DOWN", true);
+//	}
+//	if (KEY_HOLD(KEY::A))
+//	{
+//		vAxis = -1.f;
+//		GetAnimator()->Play(L"WALK_LEFT", true);
+//	}
+//	if (KEY_HOLD(KEY::D))
+//	{
+//		vAxis = 1.f;
+//		GetAnimator()->Play(L"WALK_RIGHT", true);
+//	}
+//	if (KEY_HOLD(KEY::SPACE))
+//	{
+//		CreateMissile();
+//	}
+//	if (KEY_AWAY(KEY::W))
+//	{
+//		hAxis = 0.f;
+//		GetAnimator()->Play(L"IDLE_UP", true);
+//	}
+//	if (KEY_AWAY(KEY::S))
+//	{
+//		hAxis = 0.f;
+//		GetAnimator()->Play(L"IDLE_DOWN", true);
+//	}
+//	if (KEY_AWAY(KEY::A))
+//	{
+//		vAxis = 0.f;
+//		GetAnimator()->Play(L"IDLE_LEFT", true);
+//	}
+//	if (KEY_AWAY(KEY::D))
+//	{
+//		vAxis = 0.f;
+//		GetAnimator()->Play(L"IDLE_RIGHT", true);
+//	}
+//
+//	if (m_dir != Vec2(0.f, 0.f))
+//	{
+//		if (vAxis != 0.f || hAxis != 0.f)
+//			m_dir = Vec2(vAxis, hAxis);
+//		prevDir = m_dir;
+//	}
+//	else
+//		m_dir = prevDir;
+//
+//	vPos += Vec2(vAxis, hAxis) * fDeltaTime * m_moveSpeed;
+//	SetPos(vPos);
+//}
 
 

@@ -14,8 +14,6 @@ CMonster::CMonster()
 	: m_tInfo{}
 	,m_AI(nullptr)
 {
-	CreateCollider();
-	GetCollider()->SetScale(Vec2(40.f, 40.f));
 }
 
 CMonster::~CMonster()
