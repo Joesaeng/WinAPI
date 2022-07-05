@@ -162,6 +162,8 @@
     <ClInclude Include="CCamera.h" />
     <ClInclude Include="CCollider.h" />
     <ClInclude Include="CCore.h" />
+    <ClInclude Include="CGravity.h" />
+    <ClInclude Include="CGround.h" />
     <ClInclude Include="CIdleState.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="CMissile.h" />
@@ -207,6 +209,8 @@
     <ClCompile Include="CCamera.cpp" />
     <ClCompile Include="CCollider.cpp" />
     <ClCompile Include="CCore.cpp" />
+    <ClCompile Include="CGravity.cpp" />
+    <ClCompile Include="CGround.cpp" />
     <ClCompile Include="CIdleState.cpp" />
     <ClCompile Include="CMissile.cpp" />
     <ClCompile Include="CMonFactory.cpp" />

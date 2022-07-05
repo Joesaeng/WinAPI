@@ -26,7 +26,8 @@ CMonster::~CMonster()
 
 void CMonster::update()
 {
-	m_AI->update();
+	if (nullptr != m_AI)
+		m_AI->update();
 }
 
 void CMonster::OnCollisionEnter(CCollider* _pOther)

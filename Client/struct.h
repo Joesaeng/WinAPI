@@ -31,12 +31,19 @@ public:
 	}
 
 public:
+	Vec2 operator -()
+	{
+		return Vec2(-x, -y);
+	}
+
+
 	Vec2& operator = (POINT _pt)
 	{
 		x = (float)_pt.x;
 		y = (float)_pt.y;
 	}
 
+	// 벡터 : 벡터 연산
 	Vec2 operator + (Vec2 _vOther)
 	{
 		return Vec2(x + _vOther.x, y + _vOther.y);
@@ -51,7 +58,11 @@ public:
 		x -= _vOther.x;
 		y -= _vOther.y;
 	}
-
+	void operator *= (Vec2 _vOther)
+	{
+		x *= _vOther.x;
+		y *= _vOther.y;
+	}
 	Vec2 operator - (Vec2 _vOther)
 	{
 		return Vec2(x - _vOther.x, y - _vOther.y);
@@ -66,6 +77,8 @@ public:
 		return Vec2(x / _vOther.x, y / _vOther.y);
 	}
 
+
+	// 벡터 : 정수(실수) 연산
 	Vec2 operator * (float _f)
 	{
 		return Vec2(x * _f, y * _f);
@@ -84,6 +97,24 @@ public:
 		assert(!(0.f == _f) && "나눌 float 값이 0입니다.");
 		return Vec2(x / _f, y / _f);
 	}
+
+	void operator *= (float _f)
+	{
+		x *= _f;
+		y *= _f;
+	}
+	void operator -= (float _f)
+	{
+		x -= _f;
+		y -= _f;
+	}
+	void operator += (float _f)
+	{
+		x += _f;
+		y += _f;
+	}
+
+	// 비교연산
 	bool operator == (Vec2 _vOther)
 	{
 		if (x == _vOther.x && y == _vOther.y)

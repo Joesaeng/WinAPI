@@ -16,6 +16,8 @@ private:
 
 	CObject*			m_pPlayer; // Player
 
+	Vec2				m_Gravity;	// 각 씬에 사용 할 중력
+
 public:
 	void SetName(const wstring& _strName) { m_strName = _strName; }
 	const wstring& GetName() { return m_strName; }
@@ -24,6 +26,9 @@ public:
 	UINT GetTileY() { return m_iTileY; }
 
 	CObject* GetPlayer() { return m_pPlayer; }
+
+	void SetGravity(float _fGravity) { m_Gravity.y = _fGravity; }
+	Vec2 GetGravity() { return m_Gravity; }
 
 	virtual void update();
 	virtual void finalUpdate();

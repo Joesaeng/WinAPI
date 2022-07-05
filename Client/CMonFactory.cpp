@@ -3,6 +3,7 @@
 #include "CMonster.h"
 #include "CCollider.h"
 #include "AI.h"
+#include "CRigidBody.h"
 
 #include "CIdleState.h"
 #include "CTraceState.h"
@@ -32,12 +33,14 @@ CMonster* CMonFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos)
 
 		pMon->SetMonInfo(info);
 
-		AI* pAI = new AI;
+		pMon->CreateRigidBody(1.f);
+		pMon->GetRigidBody();
+
+		/*AI* pAI = new AI;
 		pAI->AddState(new CIdleState);
 		pAI->AddState(new CTraceState);
 		pAI->SetCurState(MON_STATE::IDLE);
-
-		pMon->SetAI(pAI);
+		pMon->SetAI(pAI);*/
 	}
 		break;
 	case MON_TYPE::RANGE:

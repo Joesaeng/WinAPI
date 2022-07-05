@@ -5,12 +5,13 @@
 class CCollider;
 class CAnimator;
 class CRigidBody;
+class CGravity;
 
 
 class CObject
 {
 private:
-	wstring		m_strName; // 오브젝트의 이름
+	wstring		m_strName;		// 오브젝트의 이름
 
 	Vec2		m_vPos;
 	Vec2		m_vScale;
@@ -19,8 +20,9 @@ private:
 	CCollider*	m_pCollider;
 	CAnimator*  m_pAnimator;
 	CRigidBody* m_pRigidBody;
+	CGravity*	m_pGravity;
 
-	bool		m_bAlive; // 오브젝트의 생존
+	bool		m_bAlive;		// 오브젝트의 생존
 
 public:
 	void SetPos(Vec2 _vPos) { m_vPos = _vPos; }
@@ -35,12 +37,15 @@ public:
 	CCollider* GetCollider() { return m_pCollider; }
 	CAnimator* GetAnimator() { return m_pAnimator; }
 	CRigidBody* GetRigidBody() { return m_pRigidBody; }
+	CGravity* GetGravity() { return m_pGravity; }
 
 	bool IsDead() { return !m_bAlive; }
 
+
 	void CreateCollider();
 	void CreateAnimator();
-	void CreateRigidBody();
+	void CreateRigidBody(float _fMass);
+	void CreateGravity();
 
 	virtual void OnCollision(CCollider* _pOther) {}			// 충돌 중인 경우 호출되는 함수
 	virtual void OnCollisionEnter(CCollider* _pOther) {}	// 이번에 충돌한 경우 호출되는 함수
